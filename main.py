@@ -1,0 +1,26 @@
+import pygame
+import sys
+from settings import *
+from level import Level
+
+pygame.init()
+size = width, height = 1200, 700
+screen = pygame.display.set_mode(size)
+all_sprites = pygame.sprite.Group()
+sprite = pygame.sprite.Sprite()
+pygame.display.set_caption("Шарик")
+
+clock = pygame.time.Clock()
+level = Level(level_map, screen)
+
+running = True
+fps = 60
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    screen.fill(pygame.Color('black'))
+    level.run()
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
