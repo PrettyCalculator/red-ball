@@ -1,11 +1,9 @@
 import pygame
-import sys
 from settings import *
 from level import Level
 
 pygame.init()
-size = width, height = 1200, 700
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode((screen_width, screen_height))
 all_sprites = pygame.sprite.Group()
 sprite = pygame.sprite.Sprite()
 pygame.display.set_caption("Шарик")
@@ -19,7 +17,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill(pygame.Color('black'))
+    screen.fill(pygame.Color('white'))
     level.run()
     pygame.display.flip()
     clock.tick(60)
