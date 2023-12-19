@@ -20,5 +20,5 @@ while running:
     screen.fill(pygame.Color('gray'))
     level.run()
     pygame.display.flip()
-    clock.tick(45)
+    clock.tick(60)
 pygame.quit()

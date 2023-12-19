@@ -2,6 +2,7 @@ import pygame
 from tiles import Tile
 from settings import *
 from player import Player
+from functions import load_image
 
 
 class Level:
@@ -15,12 +16,15 @@ class Level:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
+        image_wall = load_image('wall.png')
+        image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
+
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if cell == "X":
-                    tile = Tile((x, y), tile_size, layout)
+                    tile = Tile((x, y), image_wall)
                     self.tiles.add(tile)
                 if cell == "P":
                     player_sprite = Player((x, y))
