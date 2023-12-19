@@ -5,7 +5,7 @@ from functions import load_image
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
-        self.image = load_image('img.png')
+        self.image = load_image('img2.png')
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect(topleft=pos)
 

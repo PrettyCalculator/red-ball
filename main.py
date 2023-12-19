@@ -17,8 +17,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill(pygame.Color('white'))
+    screen.fill(pygame.Color('gray'))
     level.run()
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(45)
 pygame.quit()
