@@ -20,7 +20,8 @@ class Level:
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
-        image_jump = pygame.Surface((tile_size, tile_size))
+        image_jump = load_image('double_jump.jpg')
+        image_jump = pygame.transform.scale(image_jump, (tile_size, tile_size))
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
