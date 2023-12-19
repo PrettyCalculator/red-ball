@@ -12,8 +12,9 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0, 0)
         self.speed = 6
         self.gravity = 0.8
-        self.jump_speed = -20
+        self.jump_speed = -15
         self.is_jump = False
+        self.is_double_jump = False
 
     def get_input(self):
         keys = pygame.key.get_pressed()

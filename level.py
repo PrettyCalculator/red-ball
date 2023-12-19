@@ -1,5 +1,5 @@
 import pygame
-from tiles import Tile
+from tiles import Tile, JumpTile
 from settings import *
 from player import Player
 from functions import load_image
@@ -15,9 +15,12 @@ class Level:
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
+        self.jump_tiles = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
+
+        image_jump = pygame.Surface((tile_size, tile_size))
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -29,6 +32,9 @@ class Level:
                 if cell == "P":
                     player_sprite = Player((x, y))
                     self.player.add(player_sprite)
+                if cell == 'J':
+                    jump_tile = JumpTile((x, y), image_jump)
+                    self.jump_tiles.add(jump_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -65,6 +71,17 @@ class Level:
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
                     player.is_jump = False
+                    player.jump_speed = -15
+                elif player.direction.y < 0:
+                    player.rect.top = sprite.rect.bottom
+                    player.direction.y = 0
+        for sprite in self.jump_tiles.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                    player.jump_speed = -20
+                    player.direction.y = 0
+                    player.is_jump = False
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
@@ -73,6 +90,8 @@ class Level:
         # квадратики уровня
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
+        self.jump_tiles.update(self.world_shift)
+        self.jump_tiles.draw(self.display_surface)
         self.scroll_x()
 
         # сам герой
