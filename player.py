@@ -9,11 +9,11 @@ class Player(pygame.sprite.Sprite):
         self.delay = 0
         c = 0
         self.cur_frame = 0
-        for i in range(8):
-            image = load_image(f'img2_{c}.png')
+        for i in range(25):
+            image = load_image(f's1 ({c}).png')
             image = pygame.transform.scale(image, (50, 50))
             self.images.append(image)
-            c += 45
+            c += 1
         self.image = self.images[self.cur_frame]
         self.rect = self.image.get_rect(topleft=pos)
 
@@ -46,17 +46,15 @@ class Player(pygame.sprite.Sprite):
         self.direction.y = self.jump_speed
 
     def anim(self, direction):
-        if self.delay == 2:
-            if self.cur_frame == 7 and direction > 0:
-                self.cur_frame = 0
-            elif self.cur_frame == 0 and direction < 0:
-                self.cur_frame = 7
-            else:
-                self.cur_frame += direction
-            self.image = self.images[self.cur_frame]
-            self.delay = 0
+        if self.cur_frame == 24 and direction > 0:
+            self.cur_frame = 0
+        elif self.cur_frame == 0 and direction < 0:
+            self.cur_frame = 24
         else:
-            self.delay += 1
+            self.cur_frame += direction
+        self.image = self.images[self.cur_frame]
+        self.delay = 0
+
 
     def update(self):
         self.get_input()
