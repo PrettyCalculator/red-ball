@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.cur_frame += direction
         self.image = self.images[self.cur_frame]
-        self.delay = 0
+        self.delay = 0   
 
 
     def update(self):
