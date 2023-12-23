@@ -17,6 +17,7 @@ class Level:
         self.player = pygame.sprite.GroupSingle()
         self.jump_tiles = pygame.sprite.Group()
         self.pump_tiles = pygame.sprite.Group()
+        self.repump_tiles = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -27,6 +28,9 @@ class Level:
         image_pump = load_image('pump.png')
         image_pump = pygame.transform.scale(image_pump, (30, 64))
 
+        image_repump = load_image('repump.png')
+        image_repump = pygame.transform.scale(image_repump, (120, 66))
+
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 x = col_index * tile_size
@@ -34,15 +38,18 @@ class Level:
                 if cell == "X":
                     tile = Tile((x, y), image_wall)
                     self.tiles.add(tile)
-                if cell == "P":
+                elif cell == "P":
                     player_sprite = Player((x, y))
                     self.player.add(player_sprite)
-                if cell == 'J':
+                elif cell == 'J':
                     jump_tile = JumpTile((x, y), image_jump)
                     self.jump_tiles.add(jump_tile)
-                if cell == '1':
+                elif cell == '1':
                     pump_tile = PumpTile((x, y), image_pump)
                     self.pump_tiles.add(pump_tile)
+                elif cell == '2':
+                    repump_tile = PumpTile((x, y), image_repump)
+                    self.repump_tiles.add(repump_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -76,6 +83,14 @@ class Level:
                     player.rect.right = sprite.rect.left
                 if not player.is_big:
                     player.change_size(True)
+        for sprite in self.repump_tiles.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                if player.is_big:
+                    player.change_size(False)
 
     def vertical_movement_collision(self):
         player = self.player.sprite
@@ -114,6 +129,18 @@ class Level:
                 if not player.is_big:
                     player.change_size(True)
                 player.is_double_jump = False
+        for sprite in self.repump_tiles.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                    player.direction.y = 0
+                    player.is_jump = False
+                elif player.direction.y < 0:
+                    player.rect.top = sprite.rect.bottom
+                    player.direction.y = 0
+                if player.is_big:
+                    player.change_size(False)
+                player.is_double_jump = False
 
     def run(self):
         # квадратики уровня
@@ -123,6 +150,8 @@ class Level:
         self.jump_tiles.draw(self.display_surface)
         self.pump_tiles.update(self.world_shift)
         self.pump_tiles.draw(self.display_surface)
+        self.repump_tiles.update(self.world_shift)
+        self.repump_tiles.draw(self.display_surface)
         self.scroll_x()
 
         # сам герой

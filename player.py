@@ -9,10 +9,6 @@ class Player(pygame.sprite.Sprite):
         image = load_image(f's1 ({c}).png')
         image = pygame.transform.scale(image, (50, 50))
         frames_small.append(image)
-        c += 1
-    c = 0
-    for i in range(25):
-        image = load_image(f's1 ({c}).png')
         image = pygame.transform.scale(image, (80, 80))
         frames_big.append(image)
         c += 1
@@ -37,11 +33,11 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
-            self.anim(1)
+            self.anim()
             self.jump_speed = -15
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
-            self.anim(-1)
+            self.anim()
             self.jump_speed = -15
         else:
             self.direction.x = 0
@@ -58,18 +54,17 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         self.direction.y = self.jump_speed
 
-    def anim(self, direction):
-        if self.cur_frame == 24 and direction > 0:
+    def anim(self):
+        if self.cur_frame == 24 and self.direction.x > 0:
             self.cur_frame = 0
-        elif self.cur_frame == 0 and direction < 0:
+        elif self.cur_frame == 0 and self.direction.x < 0:
             self.cur_frame = 24
         else:
-            self.cur_frame += direction
+            self.cur_frame += int(self.direction.x)
         if self.is_big:
             self.image = self.frames[self.cur_frame]
         else:
             self.image = self.frames[self.cur_frame]
-        self.delay = 0
 
     def change_size(self, value):
         if value:
@@ -80,6 +75,16 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.frames[0].get_rect()
             self.rect.x += x - 30
             self.rect.y += y - 30
+            self.anim()
+        else:
+            self.is_big = False
+            self.frames = Player.frames_small
+            x = self.rect.x
+            y = self.rect.y
+            self.rect = self.frames[0].get_rect()
+            self.rect.x += x + 30
+            self.rect.y += y + 30
+            self.anim()
 
     def update(self):
         self.get_input()
