@@ -1,12 +1,12 @@
 level_map = [
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXXXXXXXX                    XX              XXXX          XXXXXXXXXXXX    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX P XXXXXX         XXJJJXXX        XXX                     XXXXXXXXX            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX   XXXXXX            XX                XXXXXX    X  X     X   XXXXXXXXXXXXXXX  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX   XXXXXX    XXX     XX          X X      XXX    X  X     X         XXX  XXXX  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX             XXX     XX   XXXXX  XXX  XXX   X    XXXXX       XXX    XXX     XX   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX             XXX          XX           XX   X   XXXXX      XXXXX    XXX  X  XX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XX                                                                                                 XXXXXXXXXXXXXXXXX',
+    'XXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XX                                                                                        XXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XX                                                                              XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XX                                                                                             XXXXXXXXXXXXXXXXXXXXXX',
+    'XX                                                                                              XXXXXXXXXXXXXXXXXXXXX',
+    'XX            1                                                                                XXXXXXXXXXXXXXXXXXXXXX',
+    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
