@@ -71,11 +71,11 @@ class Player(pygame.sprite.Sprite):
             self.image = self.frames[self.cur_frame]
 
     def change_size(self, value):
+        x = self.rect.x
+        y = self.rect.y
         if value:
             self.is_big = True
             self.frames = Player.frames_big
-            x = self.rect.x
-            y = self.rect.y
             self.rect = self.frames[0].get_rect()
             self.rect.x += x - 30
             self.rect.y += y - 30
@@ -83,8 +83,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.is_big = False
             self.frames = Player.frames_small
-            x = self.rect.x
-            y = self.rect.y
             self.rect = self.frames[0].get_rect()
             self.rect.x += x + 30
             self.rect.y += y + 30
