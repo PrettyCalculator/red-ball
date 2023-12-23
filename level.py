@@ -68,34 +68,42 @@ class Level:
     def horizontal_movement_collision(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
-
+        f1 = False
+        f2 = False
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
                     player.rect.left = sprite.rect.right
+                    f1 = True
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
+                    f2 = True
         for sprite in self.pump_tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
                     player.rect.left = sprite.rect.right
+                    f1 = True
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
+                    f2 = True
                 if not player.is_big:
                     player.change_size(True)
         for sprite in self.repump_tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
                     player.rect.left = sprite.rect.right
+                    f1 = True
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
+                    f2 = True
                 if player.is_big:
                     player.change_size(False)
+        player.left_collide = f1
+        player.right_collide = f2
 
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
-
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:

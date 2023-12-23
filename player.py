@@ -28,16 +28,20 @@ class Player(pygame.sprite.Sprite):
         self.is_jump = False
         self.is_double_jump = False
         self.is_big = False
+        self.right_collide = False
+        self.left_collide = False
 
     def get_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
-            self.anim()
+            if not self.right_collide:
+                self.anim()
             self.jump_speed = -15
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
-            self.anim()
+            if not self.left_collide:
+                self.anim()
             self.jump_speed = -15
         else:
             self.direction.x = 0
