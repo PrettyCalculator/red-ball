@@ -1,5 +1,5 @@
 import pygame
-from tiles import Tile, JumpTile, PumpTile
+from tiles import Tile, JumpTile, PumpTile, Star
 from settings import *
 from player import Player
 from functions import load_image
@@ -18,6 +18,9 @@ class Level:
         self.jump_tiles = pygame.sprite.Group()
         self.pump_tiles = pygame.sprite.Group()
         self.repump_tiles = pygame.sprite.Group()
+        self.star1 = pygame.sprite.Group()
+        self.star2 = pygame.sprite.Group()
+        self.star3 = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -29,7 +32,12 @@ class Level:
         image_pump = pygame.transform.scale(image_pump, (30, 64))
 
         image_repump = load_image('repump.png')
-        image_repump = pygame.transform.scale(image_repump, (120, 66))
+        image_repump = pygame.transform.scale(image_repump, (80, 26))
+
+        image_star = load_image('star.png', -1)
+        image_star = pygame.transform.scale(image_star, (30, 30))
+
+        self.stars1, self.stars2, self.stars3 = True, True, True
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -48,8 +56,17 @@ class Level:
                     pump_tile = PumpTile((x, y), image_pump)
                     self.pump_tiles.add(pump_tile)
                 elif cell == '2':
-                    repump_tile = PumpTile((x, y), image_repump)
+                    repump_tile = PumpTile((x, y + 40), image_repump)
                     self.repump_tiles.add(repump_tile)
+                elif cell == "S":
+                    star_tile = Star((x, y + 30), image_star)
+                    self.star1.add(star_tile)
+                elif cell == "s":
+                    star_tile = Star((x, y + 30), image_star)
+                    self.star2.add(star_tile)
+                elif cell == "c":
+                    star_tile = Star((x, y + 30), image_star)
+                    self.star3.add(star_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -149,17 +166,39 @@ class Level:
                 if player.is_big:
                     player.change_size(False)
                 player.is_double_jump = False
+        for sprite in self.star1.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.stars1 = False
+            if self.stars1:
+                self.star1.update(self.world_shift)
+                self.star1.draw(self.display_surface)
+        for sprite in self.star2.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.stars2 = False
+            if self.stars2:
+                self.star2.update(self.world_shift)
+                self.star2.draw(self.display_surface)
+        for sprite in self.star3.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.stars3 = False
+            if self.stars3:
+                self.star3.update(self.world_shift)
+                self.star3.draw(self.display_surface)
 
     def run(self):
         # квадратики уровня
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
+
         self.jump_tiles.update(self.world_shift)
         self.jump_tiles.draw(self.display_surface)
+
         self.pump_tiles.update(self.world_shift)
         self.pump_tiles.draw(self.display_surface)
+
         self.repump_tiles.update(self.world_shift)
         self.repump_tiles.draw(self.display_surface)
+
         self.scroll_x()
 
         # сам герой
