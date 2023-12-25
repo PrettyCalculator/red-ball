@@ -108,9 +108,7 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.direction.y = 0
-                    player.is_jump = False
-                    player.jump_speed = -15
+                    player.bunnyhop()
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
@@ -119,9 +117,8 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.direction.y = 0
-                    player.is_jump = False
                     player.is_double_jump = True
+                    player.bunnyhop()
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
@@ -129,8 +126,7 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.direction.y = 0
-                    player.is_jump = False
+                    player.bunnyhop()
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
@@ -141,8 +137,7 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.direction.y = 0
-                    player.is_jump = False
+                    player.bunnyhop()
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0

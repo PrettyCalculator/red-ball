@@ -1,5 +1,6 @@
 import pygame
 from functions import load_image
+from settings import jump_speed
 
 
 class Player(pygame.sprite.Sprite):
@@ -30,32 +31,53 @@ class Player(pygame.sprite.Sprite):
         self.is_big = False
         self.right_collide = False
         self.left_collide = False
+        self.jump_key = False
 
     def get_input(self):
+        self.jump_key = False
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
             if not self.right_collide:
                 self.anim()
-            self.jump_speed = -15
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
             if not self.left_collide:
                 self.anim()
-            self.jump_speed = -15
         else:
             self.direction.x = 0
         if keys[pygame.K_UP] and not self.is_jump:
             if self.is_double_jump:
                 self.jump_speed -= 2
             self.is_jump = True
-            self.jump()
+            self.jump_key = True
+        elif keys[pygame.K_UP]:
+            self.jump_key = True
+
+    def bunnyhop(self):
+        if self.is_double_jump and self.jump_key:
+            if self.jump_speed > -15:
+                self.jump_speed = -15
+            self.jump_speed -= 2
+            self.direction.y = self.jump_speed
+        elif self.is_jump and not self.jump_key:
+            if self.jump_speed >= 0:
+                self.direction.y = 0
+                self.is_jump = False
+                self.jump_speed = -15
+            else:
+                self.jump_speed += 5
+                self.direction.y = self.jump_speed
+        elif self.is_jump and self.jump_key:
+            self.jump_speed = -15
+            self.direction.y = self.jump_speed
 
     def apply_gravity(self):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
 
     def jump(self):
+        self.jump_speed = -15
         self.direction.y = self.jump_speed
 
     def anim(self):
