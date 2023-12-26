@@ -38,6 +38,7 @@ class Level:
         image_star = pygame.transform.scale(image_star, (30, 30))
 
         self.stars1, self.stars2, self.stars3 = True, True, True
+        self.num_star = 0
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -169,21 +170,33 @@ class Level:
         for sprite in self.star1.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars1 = False
+                self.num_star += 10
             if self.stars1:
                 self.star1.update(self.world_shift)
                 self.star1.draw(self.display_surface)
+                self.display_surface.blit(load_image('small_star.png', -1), (-50, -100, 0, 0))
+            else:
+                self.display_surface.blit(load_image('small_star1.png', -1), (-50, -100, 0, 0))
         for sprite in self.star2.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars2 = False
+                self.num_star = 10
             if self.stars2:
                 self.star2.update(self.world_shift)
                 self.star2.draw(self.display_surface)
+                self.display_surface.blit(load_image('small_star.png', -1), (10, -100, 20, 20))
+            elif not self.stars2:
+                self.display_surface.blit(load_image('small_star1.png', -1), (10, -100, 20, 20))
         for sprite in self.star3.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars3 = False
+                self.num_star += 10
             if self.stars3:
                 self.star3.update(self.world_shift)
                 self.star3.draw(self.display_surface)
+                self.display_surface.blit(load_image('small_star.png', -1), (70, -100, 20, 20))
+            else:
+                self.display_surface.blit(load_image('small_star1.png', -1), (70, -100, 20, 20))
 
     def run(self):
         # квадратики уровня
