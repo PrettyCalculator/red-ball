@@ -21,3 +21,6 @@ class PumpTile(Tile):
 
 class RePumpTile(Tile):
     pass
+
+class WaterTile(Tile):
+    pass

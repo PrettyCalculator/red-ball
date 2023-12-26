@@ -6,8 +6,8 @@ level_map = [
     'XX                                                                                             XXXXXXXXXXXXXXXXXXXXXX',
     'XX                                                                                              XXXXXXXXXXXXXXXXXXXXX',
     'XX            1  222                                                                           XXXXXXXXXXXXXXXXXXXXXX',
-    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXWWWWWWWWWWWWWWX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XX                            XWWWWWWWWWWWWWWX              XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 tile_size = 64

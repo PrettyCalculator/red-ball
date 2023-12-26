@@ -1,5 +1,5 @@
 import pygame
-from tiles import Tile, JumpTile, PumpTile
+from tiles import Tile, JumpTile, PumpTile, WaterTile
 from settings import *
 from player import Player
 from functions import load_image
@@ -18,6 +18,7 @@ class Level:
         self.jump_tiles = pygame.sprite.Group()
         self.pump_tiles = pygame.sprite.Group()
         self.repump_tiles = pygame.sprite.Group()
+        self.water_tiles = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -30,6 +31,9 @@ class Level:
 
         image_repump = load_image('repump.png')
         image_repump = pygame.transform.scale(image_repump, (120, 66))
+
+        image_water = pygame.Surface((tile_size, tile_size))
+        image_water.fill('blue')
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -50,6 +54,9 @@ class Level:
                 elif cell == '2':
                     repump_tile = PumpTile((x, y), image_repump)
                     self.repump_tiles.add(repump_tile)
+                elif cell == 'W':
+                    water_tile = WaterTile((x, y), image_water)
+                    self.water_tiles.add(water_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -155,6 +162,9 @@ class Level:
         self.pump_tiles.draw(self.display_surface)
         self.repump_tiles.update(self.world_shift)
         self.repump_tiles.draw(self.display_surface)
+        self.water_tiles.update(self.world_shift)
+        self.water_tiles.draw(self.display_surface)
+        print(self.player.sprite.jump_speed)
         self.scroll_x()
 
         # сам герой

@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 6
         self.gravity = 0.8
         self.jump_speed = -15
-        self.is_jump = False
+        self.is_jump = True
         self.is_double_jump = False
         self.is_big = False
         self.right_collide = False
