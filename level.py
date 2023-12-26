@@ -107,12 +107,12 @@ class Level:
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
+                    player.is_double_jump = False
                     player.rect.bottom = sprite.rect.top
                     player.bunnyhop()
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
-                player.is_double_jump = False
         for sprite in self.jump_tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
@@ -125,6 +125,7 @@ class Level:
         for sprite in self.pump_tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
+                    player.is_double_jump = False
                     player.rect.bottom = sprite.rect.top
                     player.bunnyhop()
                 elif player.direction.y < 0:
@@ -132,10 +133,10 @@ class Level:
                     player.direction.y = 0
                 if not player.is_big:
                     player.change_size(True)
-                player.is_double_jump = False
         for sprite in self.repump_tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
+                    player.is_double_jump = False
                     player.rect.bottom = sprite.rect.top
                     player.bunnyhop()
                 elif player.direction.y < 0:
@@ -143,7 +144,6 @@ class Level:
                     player.direction.y = 0
                 if player.is_big:
                     player.change_size(False)
-                player.is_double_jump = False
 
     def run(self):
         # квадратики уровня

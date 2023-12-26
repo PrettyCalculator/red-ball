@@ -55,12 +55,16 @@ class Player(pygame.sprite.Sprite):
             self.jump_key = True
 
     def bunnyhop(self):
-        if self.is_double_jump and self.jump_key:
-            if self.jump_speed > -15:
+        if self.jump_key:
+            if self.is_double_jump:
+                if self.jump_speed > -15:
+                    self.jump_speed = -15
+                self.jump_speed -= 2
+                self.direction.y = self.jump_speed
+            elif self.is_jump:
                 self.jump_speed = -15
-            self.jump_speed -= 2
-            self.direction.y = self.jump_speed
-        elif self.is_jump and not self.jump_key:
+                self.direction.y = self.jump_speed
+        elif self.is_jump:
             if self.jump_speed >= 0:
                 self.direction.y = 0
                 self.is_jump = False
@@ -68,12 +72,11 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.jump_speed += 5
                 self.direction.y = self.jump_speed
-        elif self.is_jump and self.jump_key:
-            self.jump_speed = -15
-            self.direction.y = self.jump_speed
 
     def apply_gravity(self):
         self.direction.y += self.gravity
+        if self.direction.y > 100:
+            self.direction.y = 100
         self.rect.y += self.direction.y
 
     def jump(self):
