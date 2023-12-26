@@ -1,5 +1,5 @@
 import pygame
-from tiles import Tile, JumpTile, PumpTile, Star
+from tiles import Tile, JumpTile, PumpTile, Star, Post
 from settings import *
 from player import Player
 from functions import load_image
@@ -18,9 +18,8 @@ class Level:
         self.jump_tiles = pygame.sprite.Group()
         self.pump_tiles = pygame.sprite.Group()
         self.repump_tiles = pygame.sprite.Group()
-        self.star1 = pygame.sprite.Group()
-        self.star2 = pygame.sprite.Group()
-        self.star3 = pygame.sprite.Group()
+        self.star1, self.star2, self.star3 = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
+        self.posts = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -36,6 +35,12 @@ class Level:
 
         image_star = load_image('star.png', -1)
         image_star = pygame.transform.scale(image_star, (30, 30))
+
+        image_post = load_image('post.png', -1)
+        image_post = pygame.transform.scale(image_post, (30, 30))
+
+        self.stars = load_image('small_star1.png', -1)
+        self.small_stars = load_image('small_star.png', -1)
 
         self.stars1, self.stars2, self.stars3 = True, True, True
         self.num_star = 0
@@ -68,6 +73,9 @@ class Level:
                 elif cell == "c":
                     star_tile = Star((x, y + 30), image_star)
                     self.star3.add(star_tile)
+                elif cell == "K":
+                    post_tile = Post((x, y + 36), image_post)
+                    self.posts.add(post_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -167,36 +175,40 @@ class Level:
                 if player.is_big:
                     player.change_size(False)
                 player.is_double_jump = False
+
         for sprite in self.star1.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars1 = False
-                self.num_star += 10
             if self.stars1:
                 self.star1.update(self.world_shift)
                 self.star1.draw(self.display_surface)
-                self.display_surface.blit(load_image('small_star.png', -1), (-50, -100, 0, 0))
+                self.display_surface.blit(self.small_stars, (-30, -100, 0, 0))
             else:
-                self.display_surface.blit(load_image('small_star1.png', -1), (-50, -100, 0, 0))
+                self.display_surface.blit(self.stars, (-250, -113, 0, 0))
+
         for sprite in self.star2.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars2 = False
-                self.num_star = 10
             if self.stars2:
                 self.star2.update(self.world_shift)
                 self.star2.draw(self.display_surface)
-                self.display_surface.blit(load_image('small_star.png', -1), (10, -100, 20, 20))
-            elif not self.stars2:
-                self.display_surface.blit(load_image('small_star1.png', -1), (10, -100, 20, 20))
+                self.display_surface.blit(self.small_stars, (30, -100, 20, 20))
+            else:
+                self.display_surface.blit(self.stars, (-180, -113, 0, 0))
+
         for sprite in self.star3.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.stars3 = False
-                self.num_star += 10
             if self.stars3:
-                self.star3.update(self.world_shift)
+                self.star3.update(self.world_shift)  # звезда
                 self.star3.draw(self.display_surface)
-                self.display_surface.blit(load_image('small_star.png', -1), (70, -100, 20, 20))
+                self.display_surface.blit(self.small_stars, (90, -100, 20, 20))
             else:
-                self.display_surface.blit(load_image('small_star1.png', -1), (70, -100, 20, 20))
+                self.display_surface.blit(self.stars, (-110, -113, 0, 0))
+
+        for sprite in self.posts.sprites():
+            if sprite.rect.colliderect(player.rect):
+                print(player.rect)
 
     def run(self):
         # квадратики уровня
@@ -211,6 +223,9 @@ class Level:
 
         self.repump_tiles.update(self.world_shift)
         self.repump_tiles.draw(self.display_surface)
+
+        self.posts.update(self.world_shift)
+        self.posts.draw(self.display_surface)
 
         self.scroll_x()
 

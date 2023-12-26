@@ -4,8 +4,8 @@ level_map = [
     'XX                                    XX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                      s    XXX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX         XXX        XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
-    'XX                        XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
-    'XX    S        1  2    XXX    c     XXX                                                              XXXXXXXXXXXXXXXXXXXXXX',
+    'XX                      K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
+    'XX K   S        1  2    XXX    c    K XXX                                                              XXXXXXXXXXXXXXXXXXXXXX',
     'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
