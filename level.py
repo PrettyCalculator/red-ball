@@ -164,7 +164,6 @@ class Level:
         self.repump_tiles.draw(self.display_surface)
         self.water_tiles.update(self.world_shift)
         self.water_tiles.draw(self.display_surface)
-        print(self.player.sprite.jump_speed)
         self.scroll_x()
 
         # сам герой

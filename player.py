@@ -72,6 +72,8 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.jump_speed += 5
                 self.direction.y = self.jump_speed
+        elif not self.is_jump:
+            self.direction.y = 0
 
     def apply_gravity(self):
         self.direction.y += self.gravity
