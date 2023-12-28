@@ -76,6 +76,8 @@ class Player(pygame.sprite.Sprite):
             self.direction.y = 0
 
     def apply_gravity(self):
+        if self.direction.y > 100:
+            self.direction.y = 100
         self.direction.y += self.gravity
         if self.direction.y > 100:
             self.direction.y = 100

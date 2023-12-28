@@ -1,4 +1,6 @@
 import pygame
+from functions import load_image
+from settings import *
 
 
 class Tile(pygame.sprite.Sprite):
@@ -24,3 +26,23 @@ class RePumpTile(Tile):
 
 class WaterTile(Tile):
     pass
+
+
+class Star(pygame.sprite.Sprite):
+    def __init__(self, pos, image):
+        super().__init__()
+        self.image = image
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def update(self, x_shift):
+        self.rect.x += x_shift
+
+
+class Post(pygame.sprite.Sprite):
+    def __init__(self, pos, image):
+        super().__init__()
+        self.image = image
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def update(self, x_shift):
+        self.rect.x += x_shift
