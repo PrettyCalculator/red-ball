@@ -153,7 +153,6 @@ class Level:
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
-                    player.is_jump = False
                     player.is_double_jump = True
                     player.bunnyhop()
                 elif player.direction.y < 0:
