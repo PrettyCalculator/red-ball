@@ -44,7 +44,7 @@ class Level:
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
 
-        self.boom = load_image('boom.png', -1)
+        self.boom = load_image('boom.jpg', -1)
 
         self.stars1, self.stars2, self.stars3 = True, True, True
         self.num_star = 0
@@ -73,7 +73,7 @@ class Level:
                     pump_tile = PumpTile((x, y), image_pump)
                     self.pump_tiles.add(pump_tile)
                 elif cell == '2':
-                    repump_tile = PumpTile((x, y), image_repump)
+                    repump_tile = PumpTile((x, y + 40), image_repump)
                     self.repump_tiles.add(repump_tile)
                 elif cell == 'W':
                     water_tile = WaterTile((x, y), image_water)
@@ -105,7 +105,8 @@ class Level:
         else:
             self.world_shift = 0
             player.speed = 8
-        self.x = player_x
+        if self.x == 0:
+            self.x = player_x
 
     def horizontal_movement_collision(self):
         player = self.player.sprite
@@ -225,14 +226,21 @@ class Level:
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
-        if direction_x < 0:
-            self.x -= self.x + player_x
-        elif direction_x > 0:
-            self.x = self.x + (self.x - player_x)
+        if direction_x < 0.0 and self.x_before != player_x:
+            self.x = self.x - (self.x - player_x)
+        elif direction_x > 0.0 and self.x_before != player_x:
+            self.x = self.x + (player_x - self.x)
+        elif self.x_before == player_x and direction_x > 0.0:
+            self.x += 1
+        elif self.x_before == player_x and direction_x < 0.0:
+            self.x -= 1
+        print(self.x)
+        self.x_before = player_x
+
         if self.count_boom != 3:
             for sprite in self.posts.sprites():
                 if sprite.rect.colliderect(player.rect):
-                    # self.world_shift += player_x
+                    self.world_shift = player_x
                     print(self.world_shift)
                     player.speed = 0
                     player.rect.x = 500
@@ -241,7 +249,8 @@ class Level:
                     self.x = 500
                     self.count_boom += 1
         else:
-            self.display_surface.blit(self.boom, (player_x, player.rect.y, 1, 1))
+            pass
+            # self.display_surface.blit(self.boom, (player_x, player.rect.y, 0, 0))
 
     def run(self):
         # квадратики уровня
