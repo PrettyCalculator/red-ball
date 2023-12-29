@@ -44,11 +44,17 @@ class Level:
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
 
+        self.boom = load_image('boom.png', -1)
+
         self.stars1, self.stars2, self.stars3 = True, True, True
         self.num_star = 0
 
         image_water = pygame.Surface((tile_size, tile_size))
         image_water.fill('blue')
+
+        self.x = 0
+        self.x_before = 0
+        self.count_boom = 0
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -89,6 +95,7 @@ class Level:
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
+
         if player_x < screen_width / 4 and direction_x < 0:
             self.world_shift = 8
             player.speed = 0
@@ -98,6 +105,7 @@ class Level:
         else:
             self.world_shift = 0
             player.speed = 8
+        self.x = player_x
 
     def horizontal_movement_collision(self):
         player = self.player.sprite
@@ -214,20 +222,41 @@ class Level:
             else:
                 self.display_surface.blit(self.stars, (-110, -113, 0, 0))
 
-        for sprite in self.posts.sprites():
-            if sprite.rect.colliderect(player.rect):
-                print(player.rect)
+        player = self.player.sprite
+        player_x = player.rect.centerx
+        direction_x = player.direction.x
+        if direction_x < 0:
+            self.x -= self.x + player_x
+        elif direction_x > 0:
+            self.x = self.x + (self.x - player_x)
+        if self.count_boom != 3:
+            for sprite in self.posts.sprites():
+                if sprite.rect.colliderect(player.rect):
+                    # self.world_shift += player_x
+                    print(self.world_shift)
+                    player.speed = 0
+                    player.rect.x = 500
+                    player.rect.y = 80
+                    self.x_before = 0
+                    self.x = 500
+                    self.count_boom += 1
+        else:
+            self.display_surface.blit(self.boom, (player_x, player.rect.y, 1, 1))
 
     def run(self):
         # квадратики уровня
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
+
         self.jump_tiles.update(self.world_shift)
         self.jump_tiles.draw(self.display_surface)
+
         self.pump_tiles.update(self.world_shift)
         self.pump_tiles.draw(self.display_surface)
+
         self.repump_tiles.update(self.world_shift)
         self.repump_tiles.draw(self.display_surface)
+
         self.water_tiles.update(self.world_shift)
         self.water_tiles.draw(self.display_surface)
 

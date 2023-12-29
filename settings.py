@@ -1,13 +1,12 @@
 level_map = [
-    'XX                                                                                                 XXXXXXXXXXXXXXXXX',
-    'XXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                                    XX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                      s    XXX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX         XXX        XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
-    'XX                      K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
-    'XX K   S        1  2    XXX    c    K XXX                                                              XXXXXXXXXXXXXXXXXXXXXX',
-    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX                                                                                                 XXXXXXXXXXXXXXXXX',
+    'XXXXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX                      s    XXX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXX         XXX        XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXX                      K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXX     S    K    1  2    XXX    c    K XXX                                                      K        XXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 tile_size = 64
