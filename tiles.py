@@ -24,6 +24,7 @@ class PumpTile(Tile):
 class RePumpTile(Tile):
     pass
 
+
 class WaterTile(Tile):
     pass
 
@@ -46,3 +47,4 @@ class Post(pygame.sprite.Sprite):
 
     def update(self, x_shift):
         self.rect.x += x_shift
+
