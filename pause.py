@@ -5,22 +5,42 @@ from settings import *
 
 class Pause(pygame.sprite.Sprite):
     initialization()
-    small = load_image('pause9.png')
-    small = pygame.transform.scale(small, (60, 60))
-    big = load_image('pause9.png')
-    big = pygame.transform.scale(big, (80, 80))
+
+    POS_SMALL = screen_width - 70, 10
+    POS_BIG = screen_width - 90, 10
+
+    SIZE_SMALL = 60, 60
+    SIZE_BIG = 80, 80
+
+    img = load_image('pause9.png')
+    small = pygame.transform.scale(img, SIZE_SMALL)
+    big = pygame.transform.scale(img, SIZE_BIG)
 
     def __init__(self):
         self.image = Pause.small
+        self.size = Pause.SIZE_SMALL
+        self.pos = Pause.POS_SMALL
+        self.rect = self.image.get_rect(topleft=self.pos)
         self.focused = False
 
     def change(self):
         if self.focused:
             self.image = Pause.big
+            self.pos = Pause.POS_BIG
         else:
             self.image = Pause.small
+            self.pos = Pause.POS_SMALL
+
+    def get_focused(self, pos):
+        if self.rect.collidepoint(pos):
+            self.focused = True
+            self.change()
+        else:
+            self.focused = False
+            self.change()
+
+    def get_clicked(self, event):
+        pass
 
     def update(self, screen):
-        self.change()
-        screen.blit(self.image, (screen_width - 70, 10))
-
+        screen.blit(self.image, self.pos)
