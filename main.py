@@ -16,14 +16,20 @@ clock = pygame.time.Clock()
 running = True
 fps = 60
 while running:
+    from settings import mode
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill(pygame.Color('gray'))
     if mode == 'home':
+        screen.fill(pygame.Color("#87cefa"))
         home.run()
     elif mode == 'game':
+        screen.fill(pygame.Color('gray'))
         game.run()
+    elif mode == 'exit':
+        running = False
+    elif mode == 'level':
+        pass
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
