@@ -81,11 +81,6 @@ class PauseMenu:
     exit2_image = pygame.transform.scale(load_image('pause_exit2.jpg'), exit2_size)
     exit2_image_big = pygame.transform.scale(load_image('pause_exit2.jpg'), (exit2_size[0] + 20, exit2_size[1] + 20))
 
-    check_pos1 = 0, 0
-    check_pos2 = 0, 0
-    check_pos3 = 0, 0
-    check_pos4 = 0, 0
-
     def __init__(self):
         self.options = False
 
@@ -114,35 +109,50 @@ class PauseMenu:
         self.exit2_image = PauseMenu.exit2_image
         self.exit2_image_rect = self.resume_image.get_rect(topleft=self.exit2_pos)
 
-        self.check_size = 70, 70
-        self.check_pos = 0
-        self.check_image = pygame.transform.scale(load_image('pause_exit.jpg'), self.check_size)
-
         self.check_surface1_size = 70, 70
-        self.check_surface1_pos = 360, 370
-        self.check_surface1_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+        self.check_surface1_pos = 370, 370
+        self.check_surface1_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_surface1_size)
+        self.check_surface1_image_rect = self.check_surface1_image.get_rect(topleft=self.check_surface1_pos)
 
         self.check_surface2_size = 70, 70
-        self.check_surface2_pos = 420, 370
-        self.check_surface2_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+        self.check_surface2_pos = 493, 370
+        self.check_surface2_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_surface2_size)
+        self.check_surface2_image_rect = self.check_surface2_image.get_rect(topleft=self.check_surface2_pos)
 
         self.check_surface3_size = 70, 70
-        self.check_surface3_pos = 480, 370
-        self.check_surface3_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+        self.check_surface3_pos = 636, 370
+        self.check_surface3_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_surface3_size)
+        self.check_surface3_image_rect = self.check_surface3_image.get_rect(topleft=self.check_surface3_pos)
 
         self.check_surface4_size = 70, 70
-        self.check_surface4_pos = 540, 370
-        self.check_surface4_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+        self.check_surface4_pos = 759, 370
+        self.check_surface4_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_surface4_size)
+        self.check_surface4_image_rect = self.check_surface4_image.get_rect(topleft=self.check_surface4_pos)
+
+        self.check_size = 70, 70
+        self.check_pos = self.check_surface4_pos
+        self.check_image = pygame.transform.scale(load_image('check_mark.png', -1), self.check_size)
+        self.check_image_rect = self.check_image.get_rect(topleft=self.check_pos)
 
     def get_clicked(self, pos):
         if self.exit_image_rect.collidepoint(pos) or self.resume_image_rect.collidepoint(pos):
             change_mode('game')
             self.options = False
-        elif self.exit2_image_rect.collidepoint(pos):
-            change_mode('home')
-            self.options = False
-        elif self.options_image_rect.collidepoint(pos):
-            self.options = True
+        elif self.options:
+            if self.check_surface1_image_rect.collidepoint(pos):
+                self.check_pos = self.check_surface1_pos
+            elif self.check_surface2_image_rect.collidepoint(pos):
+                self.check_pos = self.check_surface2_pos
+            elif self.check_surface3_image_rect.collidepoint(pos):
+                self.check_pos = self.check_surface3_pos
+            elif self.check_surface4_image_rect.collidepoint(pos):
+                self.check_pos = self.check_surface4_pos
+        else:
+            if self.exit2_image_rect.collidepoint(pos):
+                change_mode('home')
+                self.options = False
+            elif self.options_image_rect.collidepoint(pos):
+                self.options = True
 
     def get_focused(self, pos):
         if self.exit_image_rect.collidepoint(pos):
@@ -182,3 +192,4 @@ class PauseMenu:
             screen.blit(self.check_surface2_image, self.check_surface2_pos)
             screen.blit(self.check_surface3_image, self.check_surface3_pos)
             screen.blit(self.check_surface4_image, self.check_surface4_pos)
+            screen.blit(self.check_image, self.check_pos)
