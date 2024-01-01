@@ -3,7 +3,7 @@ from tiles import Tile, JumpTile, PumpTile, WaterTile
 from tiles import Tile, JumpTile, PumpTile, Star, Post
 from settings import *
 from player import Player
-from functions import load_image
+from functions import load_image, initialization
 
 
 class Level:
