@@ -1,6 +1,5 @@
 import pygame
-from tiles import Tile, JumpTile, PumpTile, WaterTile
-from tiles import Tile, JumpTile, PumpTile, Star, Post
+from tiles import Tile, JumpTile, PumpTile, Star, Post, WaterTile
 from settings import *
 from player import Player
 from functions import load_image, initialization
@@ -12,6 +11,7 @@ class Level:
         self.display_surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
+        self.pause = False
         self.level_data = level_data
 
     def setup_level(self, layout):
@@ -23,6 +23,7 @@ class Level:
         self.water_tiles = pygame.sprite.Group()
         self.star1, self.star2, self.star3 = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
         self.posts = pygame.sprite.Group()
+
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
@@ -220,25 +221,36 @@ class Level:
                 player.rect.y = 20
 
     def run(self):
-        # квадратики уровня
-        self.tiles.update(self.world_shift)
-        self.tiles.draw(self.display_surface)
-        self.jump_tiles.update(self.world_shift)
-        self.jump_tiles.draw(self.display_surface)
-        self.pump_tiles.update(self.world_shift)
-        self.pump_tiles.draw(self.display_surface)
-        self.repump_tiles.update(self.world_shift)
-        self.repump_tiles.draw(self.display_surface)
-        self.water_tiles.update(self.world_shift)
-        self.water_tiles.draw(self.display_surface)
+        if not self.pause:
+            # квадратики уровня
+            self.tiles.update(self.world_shift)
+            self.tiles.draw(self.display_surface)
+            self.jump_tiles.update(self.world_shift)
+            self.jump_tiles.draw(self.display_surface)
+            self.pump_tiles.update(self.world_shift)
+            self.pump_tiles.draw(self.display_surface)
+            self.repump_tiles.update(self.world_shift)
+            self.repump_tiles.draw(self.display_surface)
+            self.water_tiles.update(self.world_shift)
+            self.water_tiles.draw(self.display_surface)
 
-        self.posts.update(self.world_shift)
-        self.posts.draw(self.display_surface)
+            self.posts.update(self.world_shift)
+            self.posts.draw(self.display_surface)
 
-        self.scroll_x()
+            self.scroll_x()
 
-        # сам герой
-        self.player.update()
-        self.horizontal_movement_collision()
-        self.vertical_movement_collision()
-        self.player.draw(self.display_surface)
+            # сам герой
+            self.player.update()
+            self.horizontal_movement_collision()
+            self.vertical_movement_collision()
+            self.player.draw(self.display_surface)
+        else:
+            self.tiles.draw(self.display_surface)
+            self.jump_tiles.draw(self.display_surface)
+            self.pump_tiles.draw(self.display_surface)
+            self.repump_tiles.draw(self.display_surface)
+            self.water_tiles.draw(self.display_surface)
+            self.posts.draw(self.display_surface)
+            self.horizontal_movement_collision()
+            self.vertical_movement_collision()
+            self.player.draw(self.display_surface)

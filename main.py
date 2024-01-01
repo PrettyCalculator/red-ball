@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from level import Level
 from homescreen import HomeScreen
+from pause import Pause, PauseMenu
 from pause import Pause
 from functions import load_image
 
@@ -17,6 +18,7 @@ game = Level(level_map, screen)
 clock = pygame.time.Clock()
 bg_surf = load_image('background.jpg')
 pause_button = Pause()
+pause_menu = PauseMenu()
 
 running = True
 fps = 60
@@ -29,20 +31,28 @@ while running:
         if mode == 'game':
             if event.type == pygame.MOUSEMOTION:
                 pause_button.get_focused(event.pos)
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pause_button.get_focused:
-                pause_button.get_clicked(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN and pause_button.get_focused:
+                pause_button.get_clicked()
+        elif mode == 'pause':
+            if event.type == pygame.MOUSEMOTION:
+                pause_menu.get_focused(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pause_menu.get_clicked(event.pos)
+
     if mode == 'home':
         screen.fill(pygame.Color("#87cefa"))
         home.run()
     elif mode == 'game':
         bg_surf = pygame.transform.scale(bg_surf, (screen_width, screen_height))
         screen.blit(bg_surf, (0, 0))
+        game.pause = False
         game.run()
         pause_button.update(screen)
     elif mode == 'exit':
         running = False
-    elif mode == 'level':
-        pass
+    elif mode == 'pause':
+        game.pause = True
+        pause_menu.update(screen)
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

@@ -1,4 +1,6 @@
 import pygame
+
+
 def change_mode(value):
     global mode
     mode = value
