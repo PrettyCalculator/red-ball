@@ -12,6 +12,7 @@ class Level:
         self.display_surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
+        self.level_data = level_data
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -22,7 +23,6 @@ class Level:
         self.water_tiles = pygame.sprite.Group()
         self.star1, self.star2, self.star3 = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
         self.posts = pygame.sprite.Group()
-
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
@@ -215,7 +215,9 @@ class Level:
 
         for sprite in self.posts.sprites():
             if sprite.rect.colliderect(player.rect):
-                print(player.rect)
+                self.setup_level(self.level_data)
+                player.rect.x = 350
+                player.rect.y = 20
 
     def run(self):
         # квадратики уровня
