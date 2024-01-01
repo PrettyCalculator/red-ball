@@ -39,8 +39,146 @@ class Pause(pygame.sprite.Sprite):
             self.focused = False
             self.change()
 
-    def get_clicked(self, event):
-        pass
+    def get_clicked(self):
+        if self.focused:
+            self.focused = False
+            change_mode('pause')
 
     def update(self, screen):
         screen.blit(self.image, self.pos)
+
+
+class PauseMenu:
+    initialization()
+
+    surface_size = 600, screen_height // 2
+    surface_pos = 300, (screen_height - (screen_height // 2)) // 2
+    surface_image = pygame.transform.scale(load_image('pause_surface.jpg'), surface_size)
+
+    exit_size = 50, 50
+    exit_pos = 840, 170
+    exit_pos_big = 820, 170
+    exit_image = pygame.transform.scale(load_image('pause_exit.jpg'), exit_size)
+    exit_image_big = pygame.transform.scale(exit_image, (exit_size[0] + 20, exit_size[1] + 20))
+
+    resume_size = 300, 60
+    resume_pos = 450, 200
+    resume_pos_big = 440, 190
+    resume_image = pygame.transform.scale(load_image('pause_resume.jpg'), resume_size)
+    resume_image_big = pygame.transform.scale(load_image('pause_resume.jpg'),
+                                              (resume_size[0] + 20, resume_size[1] + 20))
+
+    options_size = 300, 60
+    options_pos = 450, 280
+    options_pos_big = 440, 270
+    options_image = pygame.transform.scale(load_image('pause_options.jpg'), options_size)
+    options_image_big = pygame.transform.scale(load_image('pause_options.jpg'),
+                                               (options_size[0] + 20, options_size[1] + 20))
+
+    exit2_size = 300, 60
+    exit2_pos = 450, 360
+    exit2_pos_big = 440, 350
+    exit2_image = pygame.transform.scale(load_image('pause_exit2.jpg'), exit2_size)
+    exit2_image_big = pygame.transform.scale(load_image('pause_exit2.jpg'), (exit2_size[0] + 20, exit2_size[1] + 20))
+
+    check_pos1 = 0, 0
+    check_pos2 = 0, 0
+    check_pos3 = 0, 0
+    check_pos4 = 0, 0
+
+    def __init__(self):
+        self.options = False
+
+        self.surface_size = PauseMenu.surface_size
+        self.surface_pos = PauseMenu.surface_pos
+        self.surface_image = PauseMenu.surface_image
+        self.exit_image_rect = self.surface_image.get_rect(topleft=self.surface_pos)
+
+        self.exit_size = PauseMenu.exit_size
+        self.exit_pos = PauseMenu.exit_pos
+        self.exit_image = PauseMenu.exit_image
+        self.exit_image_rect = self.exit_image.get_rect(topleft=self.exit_pos)
+
+        self.resume_size = PauseMenu.resume_size
+        self.resume_pos = PauseMenu.resume_pos
+        self.resume_image = PauseMenu.resume_image
+        self.resume_image_rect = self.resume_image.get_rect(topleft=self.resume_pos)
+
+        self.options_size = PauseMenu.options_size
+        self.options_pos = PauseMenu.options_pos
+        self.options_image = PauseMenu.options_image
+        self.options_image_rect = self.resume_image.get_rect(topleft=self.options_pos)
+
+        self.exit2_size = PauseMenu.exit2_size
+        self.exit2_pos = PauseMenu.exit2_pos
+        self.exit2_image = PauseMenu.exit2_image
+        self.exit2_image_rect = self.resume_image.get_rect(topleft=self.exit2_pos)
+
+        self.check_size = 70, 70
+        self.check_pos = 0
+        self.check_image = pygame.transform.scale(load_image('pause_exit.jpg'), self.check_size)
+
+        self.check_surface1_size = 70, 70
+        self.check_surface1_pos = 360, 370
+        self.check_surface1_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+
+        self.check_surface2_size = 70, 70
+        self.check_surface2_pos = 420, 370
+        self.check_surface2_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+
+        self.check_surface3_size = 70, 70
+        self.check_surface3_pos = 480, 370
+        self.check_surface3_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+
+        self.check_surface4_size = 70, 70
+        self.check_surface4_pos = 540, 370
+        self.check_surface4_image = pygame.transform.scale(load_image('check_surface.jpg'), self.check_size)
+
+    def get_clicked(self, pos):
+        if self.exit_image_rect.collidepoint(pos) or self.resume_image_rect.collidepoint(pos):
+            change_mode('game')
+            self.options = False
+        elif self.exit2_image_rect.collidepoint(pos):
+            change_mode('home')
+            self.options = False
+        elif self.options_image_rect.collidepoint(pos):
+            self.options = True
+
+    def get_focused(self, pos):
+        if self.exit_image_rect.collidepoint(pos):
+            self.exit_image = PauseMenu.exit_image_big
+            self.exit_pos = PauseMenu.exit_pos_big
+        else:
+            self.exit_image = PauseMenu.exit_image
+            self.exit_pos = PauseMenu.exit_pos
+        if self.resume_image_rect.collidepoint(pos):
+            self.resume_image = PauseMenu.resume_image_big
+            self.resume_pos = PauseMenu.resume_pos_big
+        else:
+            self.resume_image = PauseMenu.resume_image
+            self.resume_pos = PauseMenu.resume_pos
+        if self.options_image_rect.collidepoint(pos):
+            self.options_image = PauseMenu.options_image_big
+            self.options_pos = PauseMenu.options_pos_big
+        else:
+            self.options_image = PauseMenu.options_image
+            self.options_pos = PauseMenu.options_pos
+        if self.exit2_image_rect.collidepoint(pos):
+            self.exit2_image = PauseMenu.exit2_image_big
+            self.exit2_pos = PauseMenu.exit2_pos_big
+        else:
+            self.exit2_image = PauseMenu.exit2_image
+            self.exit2_pos = PauseMenu.exit2_pos
+
+    def update(self, screen):
+        screen.blit(self.surface_image, self.surface_pos)
+        screen.blit(self.exit_image, self.exit_pos)
+        if not self.options:
+            screen.blit(self.resume_image, self.resume_pos)
+            screen.blit(self.options_image, self.options_pos)
+            screen.blit(self.exit2_image, self.exit2_pos)
+        else:
+            screen.blit(self.check_surface1_image, self.check_surface1_pos)
+            screen.blit(self.check_surface2_image, self.check_surface2_pos)
+            screen.blit(self.check_surface3_image, self.check_surface3_pos)
+            screen.blit(self.check_surface4_image, self.check_surface4_pos)
