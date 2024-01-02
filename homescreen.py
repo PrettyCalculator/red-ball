@@ -22,7 +22,6 @@ class HomeScreen:
         btn_x, btn_y = screen_width // 2 - btn_width // 2, screen_height // 2 - btn_height // 2
         self.btn_rect = pygame.Rect(btn_x + 250, btn_y - 70, btn_width, btn_height)
         self.btn_rect1 = pygame.Rect(btn_x + 250, btn_y + 50, btn_width, btn_height)
-        font = pygame.font.Font(None, 50)
         self.text1 = font.render("Play", True, pygame.Color('#a8d8ff'))
         self.text2 = font.render("Exit", True, pygame.Color('#a8d8ff'))
         self.text_x = btn_x + 780 // 2 - self.text1.get_width() // 2

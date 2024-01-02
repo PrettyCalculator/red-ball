@@ -45,6 +45,7 @@ class Pause(pygame.sprite.Sprite):
     def get_clicked(self):
         if self.focused:
             self.focused = False
+            self.change()
             self.sound.click()
             change_mode('pause')
 
@@ -84,6 +85,11 @@ class PauseMenu:
     exit2_pos_big = 440, 350
     exit2_image = pygame.transform.scale(load_image('pause_exit2.jpg'), exit2_size)
     exit2_image_big = pygame.transform.scale(load_image('pause_exit2.jpg'), (exit2_size[0] + 20, exit2_size[1] + 20))
+
+    value_image_0 = font.render("0%", True, pygame.Color('black'))
+    value_image_25 = font.render("25%", True, pygame.Color('black'))
+    value_image_75 = font.render("75%", True, pygame.Color('black'))
+    value_image_100 = font.render("100%", True, pygame.Color('black'))
 
     def __init__(self):
         self.options = False
@@ -139,6 +145,14 @@ class PauseMenu:
         self.check_image = pygame.transform.scale(load_image('check_mark.png', -1), self.check_size)
         self.check_image_rect = self.check_image.get_rect(topleft=self.check_pos)
 
+        self.text_pos1 = 440, 270
+        self.text_pos2 = 500, 370
+        self.text_image = font.render("Громкость: ", True, pygame.Color('black'))
+
+        self.value_pos1 = 640, 272
+        self.value_pos2 = 770, 370
+        self.value_image = PauseMenu.value_image_100
+
     def get_clicked(self, pos):
         if self.exit_image_rect.collidepoint(pos) or self.resume_image_rect.collidepoint(pos):
             change_mode('game')
@@ -149,18 +163,26 @@ class PauseMenu:
                 self.check_pos = self.check_surface1_pos
                 self.sound.click()
                 self.sound.click_sound.set_volume(0)
-            elif self.check_surface2_image_rect.collidepoint(pos):
+                self.value_image = PauseMenu.value_image_0
+                return 0.01
+            if self.check_surface2_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface2_pos
                 self.sound.click()
                 self.sound.click_sound.set_volume(0.25)
-            elif self.check_surface3_image_rect.collidepoint(pos):
+                self.value_image = PauseMenu.value_image_25
+                return 0.25
+            if self.check_surface3_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface3_pos
                 self.sound.click()
-                self.sound.click_sound.set_volume(0.75)
-            elif self.check_surface4_image_rect.collidepoint(pos):
+                self.sound.click_sound.set_volume(0.7)
+                self.value_image = PauseMenu.value_image_75
+                return 0.75
+            if self.check_surface4_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface4_pos
                 self.sound.click()
-                self.sound.click_sound.set_volume(1)
+                self.sound.click_sound.set_volume(1.0)
+                self.value_image = PauseMenu.value_image_100
+                return 1
         else:
             if self.exit2_image_rect.collidepoint(pos):
                 change_mode('home')
@@ -209,3 +231,5 @@ class PauseMenu:
             screen.blit(self.check_surface3_image, self.check_surface3_pos)
             screen.blit(self.check_surface4_image, self.check_surface4_pos)
             screen.blit(self.check_image, self.check_pos)
+            screen.blit(self.text_image, (self.text_pos1, self.text_pos2))
+            screen.blit(self.value_image, (self.value_pos1, self.value_pos2))

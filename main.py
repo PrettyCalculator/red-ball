@@ -30,6 +30,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            sound.click()
         if mode == 'game':
             if event.type == pygame.MOUSEMOTION:
                 pause_button.get_focused(event.pos)
@@ -39,7 +41,9 @@ while running:
             if event.type == pygame.MOUSEMOTION:
                 pause_menu.get_focused(event.pos)
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pause_menu.get_clicked(event.pos)
+                value = pause_menu.get_clicked(event.pos)
+                if value:
+                    sound.background_sound.set_volume(value)
 
     if mode == 'home':
         screen.fill(pygame.Color("#87cefa"))

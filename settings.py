@@ -31,10 +31,12 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-
+pygame.font.init()
 tile_size = 64
 screen_width = 1200
 screen_height = len(homescreen_map) * tile_size
 jump_speed = -15
 screen = pygame.display.set_mode((screen_width, screen_height))
 mode = 'home'
+font = pygame.font.Font(None, 50)
+volume = 1

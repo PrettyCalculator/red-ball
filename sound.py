@@ -13,4 +13,3 @@ class Sound:
 
     def background(self):
         self.background_sound.play(-1)
-        self.background_sound.set_volume(0.1)
