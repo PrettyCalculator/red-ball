@@ -8,15 +8,15 @@ def change_mode(value):
 
 level_map = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX    P           XX2                                                   X    X              XXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX    1 XXXXX     XXXX    XXXK                                         X   X  K   X           XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       X       X               XXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  X             X          XXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX  XXX S XXX   XXXXXXX   X        X                  X             X        c                XXXXXXXXXXXXXXXXXXX                          ',
-    'XXXXX  XXXXX XXX             X XXX                              KK    X         X        KK      XXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX        XXX      2      XsXXXXJJX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXXJJXXXXXXXXXJJJXXXX XXXJJXXXXXXXXX                             XXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+    'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    P           XX2                                                   XK  X               XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXX S XXX   XXXXXXX   X        X                  X             XXXXXX     X                   XXXXXXXXXXXXXX',
+    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c  X   KK     KK      XXXXXXXXXXXXXX',
+    'XXXXX        XXX             XsXXXXJJX                        XXXXXXXXXXXXXXX   X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXJJXXXXXXXXXJJJXXXXXXXXJJXXXXXXXXX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 homescreen_map = [
     '',
