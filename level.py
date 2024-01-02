@@ -218,7 +218,11 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
                 player.rect.x = 350
-                player.rect.y = 20
+                player.rect.y = 2
+        if player.rect.y >= 600:
+            self.setup_level(self.level_data)
+            player.rect.x = 350
+            player.rect.y = 20
 
     def run(self):
         if not self.pause:
