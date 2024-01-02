@@ -1,10 +1,9 @@
-import pygame
 from settings import *
 from level import Level
 from homescreen import HomeScreen
 from pause import Pause, PauseMenu
-from pause import Pause
 from functions import load_image
+from sound import Sound
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -19,6 +18,9 @@ clock = pygame.time.Clock()
 bg_surf = load_image('background.jpg')
 pause_button = Pause()
 pause_menu = PauseMenu()
+
+sound = Sound()
+sound.background()
 
 running = True
 fps = 60

@@ -1,6 +1,6 @@
-import pygame
 from functions import *
 from settings import *
+from sound import Sound
 
 
 class Pause(pygame.sprite.Sprite):
@@ -22,6 +22,7 @@ class Pause(pygame.sprite.Sprite):
         self.pos = Pause.POS_SMALL
         self.rect = self.image.get_rect(topleft=self.pos)
         self.focused = False
+        self.sound = Sound()
 
     def change(self):
         if self.focused:
@@ -32,16 +33,19 @@ class Pause(pygame.sprite.Sprite):
             self.pos = Pause.POS_SMALL
 
     def get_focused(self, pos):
-        if self.rect.collidepoint(pos):
+        if self.rect.collidepoint(pos) and not self.focused:
             self.focused = True
+            self.sound.click()
             self.change()
-        else:
+        elif not self.rect.collidepoint(pos) and self.focused:
+            self.sound.click()
             self.focused = False
             self.change()
 
     def get_clicked(self):
         if self.focused:
             self.focused = False
+            self.sound.click()
             change_mode('pause')
 
     def update(self, screen):
@@ -83,6 +87,7 @@ class PauseMenu:
 
     def __init__(self):
         self.options = False
+        self.sound = Sound()
 
         self.surface_size = PauseMenu.surface_size
         self.surface_pos = PauseMenu.surface_pos
@@ -138,21 +143,32 @@ class PauseMenu:
         if self.exit_image_rect.collidepoint(pos) or self.resume_image_rect.collidepoint(pos):
             change_mode('game')
             self.options = False
+            self.sound.click()
         elif self.options:
             if self.check_surface1_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface1_pos
+                self.sound.click()
+                self.sound.click_sound.set_volume(0)
             elif self.check_surface2_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface2_pos
+                self.sound.click()
+                self.sound.click_sound.set_volume(0.25)
             elif self.check_surface3_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface3_pos
+                self.sound.click()
+                self.sound.click_sound.set_volume(0.75)
             elif self.check_surface4_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface4_pos
+                self.sound.click()
+                self.sound.click_sound.set_volume(1)
         else:
             if self.exit2_image_rect.collidepoint(pos):
                 change_mode('home')
                 self.options = False
+                self.sound.click()
             elif self.options_image_rect.collidepoint(pos):
                 self.options = True
+                self.sound.click()
 
     def get_focused(self, pos):
         if self.exit_image_rect.collidepoint(pos):

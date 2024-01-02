@@ -1,6 +1,6 @@
 import pygame
 from functions import load_image
-from settings import jump_speed
+from settings import *
 
 
 class Player(pygame.sprite.Sprite):

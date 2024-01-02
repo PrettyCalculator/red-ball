@@ -6,6 +6,8 @@ def change_mode(value):
     mode = value
 
 
+pygame.mixer.init()
+
 level_map = [
     'XX                                                                                                 XXXXXXXXXXXXXXXXX',
     'XXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
