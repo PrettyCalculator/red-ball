@@ -13,9 +13,9 @@ level_map = [
     'XXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                                    XX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                      s    XXX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX         XXX        XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
-    'XX                      K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
-    'XX K   S        1  2    XXX    c    K XXX                                                              XXXXXXXXXXXXXXXXXXXXXX',
+    'XX                 XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
+    'XX          XXX            K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
+    'XX K   S    DX 1  2    XXX    c    K XXX                                                            XXXXXXXXXXXXXXXXXXXXXX',
     'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
@@ -31,6 +31,8 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
+
+levels = [level_map, level_map]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200

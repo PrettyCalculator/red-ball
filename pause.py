@@ -93,6 +93,7 @@ class PauseMenu:
 
     def __init__(self):
         self.options = False
+        self.transition = False
         self.sound = Sound()
 
         self.surface_size = PauseMenu.surface_size

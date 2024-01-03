@@ -35,3 +35,7 @@ class Star(Tile):
 
 class Post(Tile):
     pass
+
+
+class Door(Tile):
+    pass

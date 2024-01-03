@@ -1,18 +1,21 @@
 import pygame
-from tiles import Tile, JumpTile, PumpTile, Star, Post, WaterTile
+from tiles import *
 from settings import *
 from player import Player
 from functions import load_image, initialization
 
 
 class Level:
-    def __init__(self, level_data, surface):
+    def __init__(self, surface):
         # настройка уровня
         self.display_surface = surface
-        self.setup_level(level_data)
+        self.levels = levels
+        self.level_index = 0
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
         self.world_shift = 0
         self.pause = False
-        self.level_data = level_data
+        self.passed = False
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -23,6 +26,7 @@ class Level:
         self.water_tiles = pygame.sprite.Group()
         self.star1, self.star2, self.star3 = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
         self.posts = pygame.sprite.Group()
+        self.door = pygame.sprite.GroupSingle()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -41,6 +45,9 @@ class Level:
 
         image_post = load_image('post.png', -1)
         image_post = pygame.transform.scale(image_post, (30, 30))
+
+        image_door = load_image('door.png', -1)
+        image_door = pygame.transform.scale(image_door, (tile_size + 7, tile_size + 7))
 
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
@@ -85,6 +92,9 @@ class Level:
                 elif cell == "K":
                     post_tile = Post((x, y + 36), image_post)
                     self.posts.add(post_tile)
+                elif cell == 'D':
+                    door_tile = Door((x, y), image_door)
+                    self.door.add(door_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -133,6 +143,8 @@ class Level:
                     f2 = True
                 if player.is_big:
                     player.change_size(False)
+        if self.door.sprite.rect.colliderect(player.rect):
+            pass
         player.left_collide = f1
         player.right_collide = f2
 
@@ -233,9 +245,10 @@ class Level:
             self.repump_tiles.draw(self.display_surface)
             self.water_tiles.update(self.world_shift)
             self.water_tiles.draw(self.display_surface)
-
             self.posts.update(self.world_shift)
             self.posts.draw(self.display_surface)
+            self.door.update(self.world_shift)
+            self.door.draw(self.display_surface)
 
             self.scroll_x()
 

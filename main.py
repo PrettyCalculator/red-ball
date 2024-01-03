@@ -12,7 +12,7 @@ sprite = pygame.sprite.Sprite()
 pygame.display.set_caption("Шарик")
 
 home = HomeScreen(homescreen_map, screen)
-game = Level(level_map, screen)
+game = Level(screen)
 
 clock = pygame.time.Clock()
 bg_surf = load_image('background.jpg')
