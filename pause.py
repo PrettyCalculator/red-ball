@@ -184,6 +184,7 @@ class PauseMenu:
                 self.sound.click_sound.set_volume(1.0)
                 self.value_image = PauseMenu.value_image_100
                 return 1
+
         else:
             if self.exit2_image_rect.collidepoint(pos):
                 change_mode('home')

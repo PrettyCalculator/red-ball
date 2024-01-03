@@ -197,34 +197,44 @@ class Level:
                 player.is_double_jump = False
 
         for sprite in self.star1.sprites():
-            if sprite.rect.colliderect(player.rect):
+            if sprite.rect.colliderect(player.rect) and self.stars1:
                 self.stars1 = False
+                self.num_star += 1
             if self.stars1:
                 self.star1.update(self.world_shift)
                 self.star1.draw(self.display_surface)
+            if self.num_star < 1:
                 self.display_surface.blit(self.small_stars, (-30, -100, 0, 0))
-            else:
-                self.display_surface.blit(self.stars, (-250, -113, 0, 0))
 
         for sprite in self.star2.sprites():
-            if sprite.rect.colliderect(player.rect):
+            if sprite.rect.colliderect(player.rect) and self.stars2:
                 self.stars2 = False
+                self.num_star += 1
             if self.stars2:
                 self.star2.update(self.world_shift)
                 self.star2.draw(self.display_surface)
+            if self.num_star < 2:
                 self.display_surface.blit(self.small_stars, (30, -100, 20, 20))
-            else:
-                self.display_surface.blit(self.stars, (-180, -113, 0, 0))
 
         for sprite in self.star3.sprites():
-            if sprite.rect.colliderect(player.rect):
+            if sprite.rect.colliderect(player.rect) and self.stars3:
                 self.stars3 = False
+                self.num_star += 1
             if self.stars3:
                 self.star3.update(self.world_shift)  # звезда
                 self.star3.draw(self.display_surface)
+            if self.num_star < 3:
                 self.display_surface.blit(self.small_stars, (90, -100, 20, 20))
-            else:
-                self.display_surface.blit(self.stars, (-110, -113, 0, 0))
+
+        if self.num_star == 1:
+            self.display_surface.blit(self.stars, (-250, -113, 0, 0))
+        elif self.num_star == 2:
+            self.display_surface.blit(self.stars, (-250, -113, 0, 0))
+            self.display_surface.blit(self.stars, (-180, -113, 0, 0))
+        elif self.num_star == 3:
+            self.display_surface.blit(self.stars, (-250, -113, 0, 0))
+            self.display_surface.blit(self.stars, (-180, -113, 0, 0))
+            self.display_surface.blit(self.stars, (-110, -113, 0, 0))
 
         for sprite in self.posts.sprites():
             if sprite.rect.colliderect(player.rect):
