@@ -6,17 +6,28 @@ def change_mode(value):
     mode = value
 
 
-level_map = [
+level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX    P           XX2                                                   XK  X               XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    P           XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX S XXX   XXXXXXX   X        X                  X             XXXXXX     X                   XXXXXXXXXXXXXX',
-    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c  X   KK     KK      XXXXXXXXXXXXXX',
+    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c XX   KK    KK                DXXXX',
     'XXXXX        XXX             XsXXXXJJX                        XXXXXXXXXXXXXXX   X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXJJXXXXXXXXXJJJXXXXXXXXJJXXXXXXXXX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+level_map2 = [
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXX      XXXXXXXXXXXs                                                          XXXXXXXXXXX',
+    'XXXXXP          XXXXXXXXXX   XX   XXXXXXXXXXXXXXXXXXXXXXXXXXX                                         2  XXXXXXXXX',
+    'XXXXXXXXXXXXXX  XXXXXXXXXX  XXXX    XXXXXXXXXXXXXXXXXXXXXXXXX                              XKXXKXXKX XXXXXXXXXXXXX',
+    'XXXXXXXX        K S   XXXXX  XXXXX    XXXXXXXXXXXXXXXXXXXXXXX              111111        XXXXXXXXXXX XXXXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXXX  XX  XXXXXXXX                                       XXXXXXXXXX XXXXXXXXXXXXXXX   XXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXXXX    XXXXXXXXX                                       XXXXXXXXXX  XXXXXXXXXXXXXX   XXXXXXXXXXX',
+    'XXXXXXXX                 XXXXXXXXXX               K   K       XJJX   XJJX XXXXXXXXXXc XXXXXXXXXXXXXX            DX',
+    'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 homescreen_map = [
     '',
@@ -29,7 +40,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-
+levels = [level_map1, level_map2]
 tile_size = 64
 screen_width = 1200
 screen_height = len(homescreen_map) * tile_size
