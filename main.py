@@ -1,7 +1,7 @@
 from settings import *
 from level import Level
 from homescreen import HomeScreen
-from pause import Pause, PauseMenu
+from pause import *
 from functions import load_image
 from sound import Sound
 
@@ -18,6 +18,7 @@ clock = pygame.time.Clock()
 bg_surf = load_image('background.jpg')
 pause_button = Pause()
 pause_menu = PauseMenu()
+transition_menu = TransitionMenu()
 
 sound = Sound()
 sound.background()
@@ -44,6 +45,13 @@ while running:
                 value = pause_menu.get_clicked(event.pos)
                 if value:
                     sound.background_sound.set_volume(value)
+        elif mode == 'transition':
+            if event.type == pygame.MOUSEMOTION:
+                transition_menu.get_focused(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if transition_menu.get_clicked(event.pos):
+                    change_mode('game')
+                    game.change_level()
 
     if mode == 'home':
         screen.fill(pygame.Color("#87cefa"))
@@ -59,6 +67,8 @@ while running:
     elif mode == 'pause':
         game.pause = True
         pause_menu.update(screen)
+    elif mode == 'transition':
+        transition_menu.update(screen)
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

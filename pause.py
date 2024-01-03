@@ -93,7 +93,6 @@ class PauseMenu:
 
     def __init__(self):
         self.options = False
-        self.transition = False
         self.sound = Sound()
 
         self.surface_size = PauseMenu.surface_size
@@ -234,3 +233,41 @@ class PauseMenu:
             screen.blit(self.check_image, self.check_pos)
             screen.blit(self.text_image, (self.text_pos1, self.text_pos2))
             screen.blit(self.value_image, (self.value_pos1, self.value_pos2))
+
+
+class TransitionMenu(PauseMenu):
+    def get_clicked(self, pos):
+        if self.resume_image_rect.collidepoint(pos):
+            return 1
+        elif self.exit_image_rect.collidepoint(pos):
+            change_mode('game')
+            self.sound.click()
+        elif self.exit2_image_rect.collidepoint(pos):
+            change_mode('home')
+            self.sound.click()
+
+    def get_focused(self, pos):
+        if self.exit_image_rect.collidepoint(pos):
+            self.exit_image = PauseMenu.exit_image_big
+            self.exit_pos = PauseMenu.exit_pos_big
+        else:
+            self.exit_image = PauseMenu.exit_image
+            self.exit_pos = PauseMenu.exit_pos
+        if self.resume_image_rect.collidepoint(pos):
+            self.resume_image = PauseMenu.resume_image_big
+            self.resume_pos = PauseMenu.resume_pos_big
+        else:
+            self.resume_image = PauseMenu.resume_image
+            self.resume_pos = PauseMenu.resume_pos
+        if self.exit2_image_rect.collidepoint(pos):
+            self.exit2_image = PauseMenu.exit2_image_big
+            self.exit2_pos = PauseMenu.exit2_pos_big
+        else:
+            self.exit2_image = PauseMenu.exit2_image
+            self.exit2_pos = PauseMenu.exit2_pos
+
+    def update(self, screen):
+        screen.blit(self.surface_image, self.surface_pos)
+        screen.blit(self.exit_image, self.exit_pos)
+        screen.blit(self.resume_image, self.resume_pos)
+        screen.blit(self.exit2_image, self.exit2_pos)

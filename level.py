@@ -15,7 +15,6 @@ class Level:
         self.setup_level(self.level_data)
         self.world_shift = 0
         self.pause = False
-        self.passed = False
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -144,7 +143,8 @@ class Level:
                 if player.is_big:
                     player.change_size(False)
         if self.door.sprite.rect.colliderect(player.rect):
-            pass
+            change_mode('transition')
+            self.pause = True
         player.left_collide = f1
         player.right_collide = f2
 
@@ -235,6 +235,11 @@ class Level:
             self.setup_level(self.level_data)
             player.rect.x = 350
             player.rect.y = 20
+
+    def change_level(self):
+        self.level_index += 1
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
 
     def run(self):
         if not self.pause:
