@@ -6,19 +6,28 @@ def change_mode(value):
     mode = value
 
 
-pygame.mixer.init()
-
-level_map = [
-    'XX                                                                                                 XXXXXXXXXXXXXXXXX',
-    'XXX    P                                                                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                                    XX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                      s    XXX                                                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                 XXX        X     X                                                               XXXXXXXXXXXXXXXXXXXXXX',
-    'XX          XXX            K  XX         XX                                                             XXXXXXXXXXXXXXXXXXXXX',
-    'XX K   S    DX 1  2    XXX    c    K XXX                                                            XXXXXXXXXXXXXXXXXXXXXX',
-    'XXJJJJJJJJJJXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXX    XXXX      XXXXXXXX     XXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XX                                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+level_map1 = [
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    P           XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX  XXX S XXX   XXXXXXX   X        X                  X             XXXXXX     X                   XXXXXXXXXXXXXX',
+    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c XX   KK    KK                DXXXX',
+    'XXXXX        XXX             XsXXXXJJX                        XXXXXXXXXXXXXXX   X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXJJXXXXXXXXXJJJXXXXXXXXJJXXXXXXXXX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+level_map2 = [
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXX      XXXXXXXXXXXs                                                          XXXXXXXXXXX',
+    'XXXXXP          XXXXXXXXXX   XX   XXXXXXXXXXXXXXXXXXXXXXXXXXX                                         2  XXXXXXXXX',
+    'XXXXXXXXXXXXXX  XXXXXXXXXX  XXXX    XXXXXXXXXXXXXXXXXXXXXXXXX                              XKXXKXXKX XXXXXXXXXXXXX',
+    'XXXXXXXX        K S   XXXXX  XXXXX    XXXXXXXXXXXXXXXXXXXXXXX              111111        XXXXXXXXXXX XXXXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXXX  XX  XXXXXXXX                                       XXXXXXXXXX XXXXXXXXXXXXXXX   XXXXXXXXXXX',
+    'XXXXXXXX  XXXXXXXXXXXX    XXXXXXXXX                                       XXXXXXXXXX  XXXXXXXXXXXXXX   XXXXXXXXXXX',
+    'XXXXXXXX                 XXXXXXXXXX               K   K       XJJX   XJJX XXXXXXXXXXc XXXXXXXXXXXXXX            DX',
+    'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 homescreen_map = [
     '',
@@ -31,6 +40,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
+levels = [level_map1, level_map2]
 
 levels = [level_map, level_map]
 pygame.font.init()
