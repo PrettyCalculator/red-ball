@@ -9,7 +9,7 @@ def change_mode(value):
 level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX    P           XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    P   D        XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
@@ -20,13 +20,13 @@ level_map1 = [
 level_map2 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXX      XXXXXXXXXXXs                                                          XXXXXXXXXXX',
-    'XXXXXP          XXXXXXXXXX   XX   XXXXXXXXXXXXXXXXXXXXXXXXXXX                                         2  XXXXXXXXX',
+    'XXXXXP     D    XXXXXXXXXX   XX   XXXXXXXXXXXXXXXXXXXXXXXXXXX                                         2  XXXXXXXXX',
     'XXXXXXXXXXXXXX  XXXXXXXXXX  XXXX    XXXXXXXXXXXXXXXXXXXXXXXXX                              XKXXKXXKX XXXXXXXXXXXXX',
     'XXXXXXXX        K S   XXXXX  XXXXX    XXXXXXXXXXXXXXXXXXXXXXX              111111        XXXXXXXXXXX XXXXXXXXXXXXX',
     'XXXXXXXX  XXXXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXX',
     'XXXXXXXX  XXXXXXXXXXX  XX  XXXXXXXX                                       XXXXXXXXXX XXXXXXXXXXXXXXX   XXXXXXXXXXX',
     'XXXXXXXX  XXXXXXXXXXXX    XXXXXXXXX                                       XXXXXXXXXX  XXXXXXXXXXXXXX   XXXXXXXXXXX',
-    'XXXXXXXX                 XXXXXXXXXX               K   K       XJJX   XJJX XXXXXXXXXXc XXXXXXXXXXXXXX            DX',
+    'XXXXXXXX                 XXXXXXXXXX               K   K       XJJX   XJJX XXXXXXXXXXc XXXXXXXXXXXXXX            X',
     'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 homescreen_map = [
@@ -40,9 +40,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map1, level_map2]
-
-levels = [level_map, level_map]
+levels = [level_map2, level_map1]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200
