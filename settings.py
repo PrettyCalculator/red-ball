@@ -52,7 +52,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map1, level_map2]
+levels = [level_map1, level_map2    ]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200

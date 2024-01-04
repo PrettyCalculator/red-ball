@@ -83,7 +83,6 @@ while running:
         transition_menu.update(screen)
     elif mode == 'passed':
         passed_menu.update(screen)
-    print(mode)
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

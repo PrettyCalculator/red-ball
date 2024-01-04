@@ -1,8 +1,7 @@
-import pygame
 from tiles import *
 from settings import *
 from player import Player
-from functions import load_image, initialization
+from functions import load_image
 
 
 class Level:
@@ -270,7 +269,6 @@ class Level:
             self.posts.draw(self.display_surface)
             self.door.update(self.world_shift)
             self.door.draw(self.display_surface)
-
             self.scroll_x()
 
             # сам герой
