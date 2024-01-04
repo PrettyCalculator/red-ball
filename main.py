@@ -57,6 +57,13 @@ while running:
                     game.to_start()
                 elif value == 'resume':
                     game.change_level()
+        elif mode == 'passed':
+            if event.type == pygame.MOUSEMOTION:
+                passed_menu.get_focused(event.pos)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                value = passed_menu.get_clicked(event.pos)
+                if value == 'exit':
+                    game.to_start()
 
     if mode == 'home':
         screen.fill(pygame.Color("#87cefa"))
@@ -76,6 +83,7 @@ while running:
         transition_menu.update(screen)
     elif mode == 'passed':
         passed_menu.update(screen)
+    print(mode)
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

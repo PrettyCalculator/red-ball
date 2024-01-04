@@ -143,8 +143,12 @@ class Level:
                 if player.is_big:
                     player.change_size(False)
         if self.door.sprite.rect.colliderect(player.rect):
-            change_mode('transition')
-            self.pause = True
+            if self.level_index + 1 > len(self.levels) - 1:
+                change_mode('passed')
+                self.pause = True
+            else:
+                change_mode('transition')
+                self.pause = True
         player.left_collide = f1
         player.right_collide = f2
 

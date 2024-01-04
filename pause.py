@@ -237,6 +237,19 @@ class PauseMenu:
 
 
 class TransitionMenu(PauseMenu):
+    resume_size = 300, 60
+    resume_pos = 450, 280
+    resume_pos_big = 440, 260
+    resume_image = pygame.transform.scale(load_image('pause_resume.jpg'), resume_size)
+    resume_image_big = pygame.transform.scale(load_image('pause_resume.jpg'),
+                                              (resume_size[0] + 20, resume_size[1] + 20))
+
+    def __init__(self):
+        super().__init__()
+        self.resume_pos = TransitionMenu.resume_pos
+        self.resume_image = TransitionMenu.resume_image
+        self.resume_image_rect = self.resume_image.get_rect(topleft=self.resume_pos)
+
     def get_clicked(self, pos):
         if self.resume_image_rect.collidepoint(pos):
             change_mode('game')
@@ -248,11 +261,11 @@ class TransitionMenu(PauseMenu):
 
     def get_focused(self, pos):
         if self.resume_image_rect.collidepoint(pos):
-            self.resume_image = PauseMenu.resume_image_big
-            self.resume_pos = PauseMenu.resume_pos_big
+            self.resume_image = TransitionMenu.resume_image_big
+            self.resume_pos = TransitionMenu.resume_pos_big
         else:
-            self.resume_image = PauseMenu.resume_image
-            self.resume_pos = PauseMenu.resume_pos
+            self.resume_image = TransitionMenu.resume_image
+            self.resume_pos = TransitionMenu.resume_pos
         if self.exit2_image_rect.collidepoint(pos):
             self.exit2_image = PauseMenu.exit2_image_big
             self.exit2_pos = PauseMenu.exit2_pos_big
@@ -269,6 +282,8 @@ class TransitionMenu(PauseMenu):
 class PassedMenu(TransitionMenu):
     def __init__(self):
         super().__init__()
+        self.text_pos1 = 466, 260
+        self.text_image = font.render("Игра пройдена! ", True, pygame.Color('black'))
 
     def get_clicked(self, pos):
         if self.exit2_image_rect.collidepoint(pos):
@@ -284,6 +299,7 @@ class PassedMenu(TransitionMenu):
             self.exit2_image = PauseMenu.exit2_image
             self.exit2_pos = PauseMenu.exit2_pos
 
-
     def update(self, screen):
+        screen.blit(self.surface_image, self.surface_pos)
         screen.blit(self.exit2_image, self.exit2_pos)
+        screen.blit(self.text_image, self.text_pos1)
