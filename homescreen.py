@@ -34,16 +34,14 @@ class HomeScreen:
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if cell == "X":
-                    tile = Tile((x, y), image_wall)
-                    self.tiles.add(tile)
+                    self.tiles.add(Tile((x, y), image_wall))
                 elif cell == "P":
-                    player_sprite = Player((x, y))
-                    self.player.add(player_sprite)
+                    self.player.add(Player((x, y)))
 
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.apply_gravity()
-        for sprite in self.tiles.sprites():
+        for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top

@@ -1,5 +1,3 @@
-import pygame
-from functions import load_image
 from settings import *
 
 
@@ -11,27 +9,3 @@ class Tile(pygame.sprite.Sprite):
 
     def update(self, x_shift):
         self.rect.x += x_shift
-
-
-class JumpTile(Tile):
-    pass
-
-
-class PumpTile(Tile):
-    pass
-
-
-class RePumpTile(Tile):
-    pass
-
-
-class WaterTile(Tile):
-    pass
-
-
-class Star(Tile):
-    pass
-
-
-class Post(Tile):
-    pass
