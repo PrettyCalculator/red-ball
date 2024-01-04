@@ -14,7 +14,7 @@ level_map1 = [
     'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX S XXX   XXXXXXX   X        X                  X             XXXXXX     X                   XXXXXXXXXXXXXX',
-    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c XX   KK    KK                DXXXX',
+    'XXXXX  XXXXX XXX             X XXX                              KK    XXXXXXX   c XX   KK    KK                XXXX',
     'XXXXX        XXX             XsXXXXJJX                        XXXXXXXXXXXXXXX   X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXJJXXXXXXXXXJJJXXXXXXXXJJXXXXXXXXX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 level_map2 = [
@@ -29,6 +29,18 @@ level_map2 = [
     'XXXXXXXX                 XXXXXXXXXX               K   K       XJJX   XJJX XXXXXXXXXXc XXXXXXXXXXXXXX            X',
     'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
+level_map3 = [
+    '',
+    '  P',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '     D',
+    'XXXXXXXXXXXXXXXXXXX']
+
 homescreen_map = [
     '',
     '  P',
@@ -40,7 +52,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map2, level_map1]
+levels = [level_map1, level_map2, level_map3]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200

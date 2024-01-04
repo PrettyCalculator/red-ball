@@ -236,8 +236,16 @@ class Level:
             player.rect.x = 350
             player.rect.y = 20
 
-    def change_level(self):
+    def change_level(self, value=''):
         self.level_index += 1
+        if self.level_index > len(self.levels) - 1:
+            self.to_start()
+            change_mode('passed')
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
+
+    def to_start(self):
+        self.level_index = 0
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
 

@@ -19,6 +19,7 @@ bg_surf = load_image('background.jpg')
 pause_button = Pause()
 pause_menu = PauseMenu()
 transition_menu = TransitionMenu()
+passed_menu = PassedMenu()
 
 sound = Sound()
 sound.background()
@@ -43,14 +44,18 @@ while running:
                 pause_menu.get_focused(event.pos)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 value = pause_menu.get_clicked(event.pos)
-                if value:
+                if value == 'exit':
+                    game.to_start()
+                elif value:
                     sound.background_sound.set_volume(value)
         elif mode == 'transition':
             if event.type == pygame.MOUSEMOTION:
                 transition_menu.get_focused(event.pos)
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if transition_menu.get_clicked(event.pos):
-                    change_mode('game')
+                value = transition_menu.get_clicked(event.pos)
+                if value == 'exit':
+                    game.to_start()
+                elif value == 'resume':
                     game.change_level()
 
     if mode == 'home':
@@ -69,6 +74,8 @@ while running:
         pause_menu.update(screen)
     elif mode == 'transition':
         transition_menu.update(screen)
+    elif mode == 'passed':
+        passed_menu.update(screen)
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
