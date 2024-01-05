@@ -2,6 +2,7 @@ from tiles import Tile
 from settings import *
 from player import Player
 from functions import load_image
+from monster import Monster
 
 
 class Level:
@@ -28,7 +29,7 @@ class Level:
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
         self.lava = pygame.sprite.Group()
-        self.monstr = pygame.sprite.Group()
+        self.monster = pygame.sprite.GroupSingle()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -54,8 +55,6 @@ class Level:
         image_lava = load_image('lava.jpg', -1)
         image_lava = pygame.transform.scale(image_lava, (tile_size, tile_size))
 
-        image_monstr = load_image('monstr2.png', -1)
-        image_monstr = pygame.transform.scale(image_monstr, (tile_size, tile_size))
 
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
@@ -99,8 +98,7 @@ class Level:
                     lava_tile = Tile((x, y), image_lava)
                     self.lava.add(lava_tile)
                 elif cell == 'M':
-                    monstr_tile = Tile((x, y), image_monstr)
-                    self.monstr.add(monstr_tile)
+                    self.monster.add(Monster((x, y)))
 
     def scroll_x(self):
         player = self.player.sprite
@@ -148,6 +146,17 @@ class Level:
                 player.change_size(False)
         player.left_collide = f1
         player.right_collide = f2
+
+    def monster_vertical_collision(self):
+        monster = self.monster.sprite
+        for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
+            if sprite.rect.colliderect(monster.rect):
+                if monster.direction.y < 0:
+                    monster.rect.top = sprite.rect.bottom
+                    monster.direction.y = - monster.direction.y
+                elif monster.direction.y > 0:
+                    monster.rect.bottom = sprite.rect.top
+                    monster.direction.y = - monster.direction.y
 
     def vertical_movement_collision(self):
         player = self.player.sprite
@@ -271,8 +280,10 @@ class Level:
             self.door.draw(self.display_surface)
             self.lava.update(self.world_shift)
             self.lava.draw(self.display_surface)
-            self.monstr.update(self.world_shift)
-            self.monstr.draw(self.display_surface)
+
+            self.monster_vertical_collision()
+            self.monster.update(self.world_shift)
+            self.monster.draw(self.display_surface)
 
             self.scroll_x()
 
