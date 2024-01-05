@@ -29,7 +29,7 @@ class Level:
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
         self.lava = pygame.sprite.Group()
-        self.monster = pygame.sprite.GroupSingle()
+        self.monster = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -148,15 +148,15 @@ class Level:
         player.right_collide = f2
 
     def monster_vertical_collision(self):
-        monster = self.monster.sprite
-        for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
-            if sprite.rect.colliderect(monster.rect):
-                if monster.direction.y < 0:
-                    monster.rect.top = sprite.rect.bottom
-                    monster.direction.y = - monster.direction.y
-                elif monster.direction.y > 0:
-                    monster.rect.bottom = sprite.rect.top
-                    monster.direction.y = - monster.direction.y
+        for monster in self.monster.sprites():
+            for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
+                if sprite.rect.colliderect(monster.rect):
+                    if monster.direction.y < 0:
+                        monster.rect.top = sprite.rect.bottom
+                        monster.direction.y = - monster.direction.y
+                    elif monster.direction.y > 0:
+                        monster.rect.bottom = sprite.rect.top
+                        monster.direction.y = - monster.direction.y
 
     def vertical_movement_collision(self):
         player = self.player.sprite
