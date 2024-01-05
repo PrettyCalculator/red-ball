@@ -2,16 +2,19 @@ from tiles import Tile
 from settings import *
 from player import Player
 from functions import load_image
+import sqlite3
 
 
 class Level:
-    def __init__(self, level_data, surface):
+    def __init__(self, surface):
         # настройка уровня
         self.display_surface = surface
-        self.setup_level(level_data)
+        self.levels = levels
+        self.level_index = 0
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
         self.world_shift = 0
         self.pause = False
-        self.level_data = level_data
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -23,6 +26,7 @@ class Level:
         self.star1, self.star2, self.star3 = (pygame.sprite.GroupSingle(), pygame.sprite.GroupSingle(),
                                               pygame.sprite.GroupSingle())
         self.posts = pygame.sprite.Group()
+        self.door = pygame.sprite.GroupSingle()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -41,6 +45,9 @@ class Level:
 
         image_post = load_image('post.png', -1)
         image_post = pygame.transform.scale(image_post, (30, 30))
+
+        image_door = load_image('door.png', -1)
+        image_door = pygame.transform.scale(image_door, (tile_size + 7, tile_size + 7))
 
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
@@ -75,6 +82,21 @@ class Level:
                     self.star3.add(Tile((x, y + 30), image_star))
                 elif cell == "K":
                     self.posts.add(Tile((x, y + 36), image_post))
+                    post_tile = Tile((x, y + 36), image_post)
+                    self.posts.add(post_tile)
+                elif cell == 'D':
+                    door_tile = Tile((x, y), image_door)
+                    self.door.add(door_tile)
+
+    def count_stars(self):
+        c = 0
+        if not self.stars1:
+            c += 1
+        if not self.stars2:
+            c += 1
+        if not self.stars3:
+            c += 1
+        return c
 
     def scroll_x(self):
         player = self.player.sprite
@@ -205,10 +227,39 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
                 player.rect.x = 350
-                player.rect.y = 20
+                player.rect.y = 2
+        if player.rect.y >= 600:
+            self.setup_level(self.level_data)
+            player.rect.x = 350
+            player.rect.y = 20
+
+    def change_level(self, value=''):
+        self.level_index += 1
+        if self.level_index > len(self.levels) - 1:
+            self.to_start()
+            change_mode('passed')
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
+
+    def to_start(self):
+        self.level_index = 0
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
+
+    def update_database(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        cursor = con.cursor()
+        stars_game = self.count_stars()
+        stars_db = cursor.execute(f"SELECT stars FROM levels WHERE level_id = {self.level_index}").fetchall()[0][0]
+        if stars_db < stars_game:
+            cursor.execute(f"UPDATE levels SET passed = 1, stars = {self.count_stars()} "
+                           f"WHERE level_id = {self.level_index}")
+        con.commit()
+        con.close()
 
     def run(self):
         if not self.pause:
+            # квадратики уровня
             self.tiles.update(self.world_shift)
             self.tiles.draw(self.display_surface)
             self.jump_tiles.update(self.world_shift)
@@ -219,9 +270,11 @@ class Level:
             self.repump_tiles.draw(self.display_surface)
             self.water_tiles.update(self.world_shift)
             self.water_tiles.draw(self.display_surface)
+
             self.posts.update(self.world_shift)
             self.posts.draw(self.display_surface)
-
+            self.door.update(self.world_shift)
+            self.door.draw(self.display_surface)
             self.scroll_x()
 
             # сам герой
