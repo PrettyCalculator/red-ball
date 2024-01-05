@@ -250,9 +250,15 @@ class TransitionMenu(PauseMenu):
         self.resume_image = TransitionMenu.resume_image
         self.resume_image_rect = self.resume_image.get_rect(topleft=self.resume_pos)
 
+        self.star_size = 80, 80
+        self.star_white_image = pygame.transform.scale(load_image('star_white.png', -1), self.star_size)
+        self.star_yellow_image = pygame.transform.scale(load_image('star.png', -1), self.star_size)
+        self.star_pos = 450, 180
+
     def get_clicked(self, pos):
         if self.resume_image_rect.collidepoint(pos):
             change_mode('game')
+            self.sound.click()
             return 'resume'
         elif self.exit2_image_rect.collidepoint(pos):
             change_mode('home')
@@ -273,16 +279,24 @@ class TransitionMenu(PauseMenu):
             self.exit2_image = PauseMenu.exit2_image
             self.exit2_pos = PauseMenu.exit2_pos
 
-    def update(self, screen):
+    def update(self, screen, count):
         screen.blit(self.surface_image, self.surface_pos)
         screen.blit(self.resume_image, self.resume_pos)
         screen.blit(self.exit2_image, self.exit2_pos)
+        c = count
+        step = 110
+        for i in range(3):
+            if c > 0:
+                screen.blit(self.star_yellow_image, (self.star_pos[0] + step * i, self.star_pos[1]))
+            else:
+                screen.blit(self.star_white_image, (self.star_pos[0] + step * i, self.star_pos[1]))
+            c -= 1
 
 
 class PassedMenu(TransitionMenu):
     def __init__(self):
         super().__init__()
-        self.text_pos1 = 466, 260
+        self.text_pos1 = 466, 290
         self.text_image = font.render("Игра пройдена! ", True, pygame.Color('black'))
 
     def get_clicked(self, pos):
@@ -299,7 +313,15 @@ class PassedMenu(TransitionMenu):
             self.exit2_image = PauseMenu.exit2_image
             self.exit2_pos = PauseMenu.exit2_pos
 
-    def update(self, screen):
+    def update(self, screen, count):
         screen.blit(self.surface_image, self.surface_pos)
         screen.blit(self.exit2_image, self.exit2_pos)
         screen.blit(self.text_image, self.text_pos1)
+        c = count
+        step = 110
+        for i in range(3):
+            if c > 0:
+                screen.blit(self.star_yellow_image, (self.star_pos[0] + step * i, self.star_pos[1]))
+            else:
+                screen.blit(self.star_white_image, (self.star_pos[0] + step * i, self.star_pos[1]))
+            c -= 1

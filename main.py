@@ -80,9 +80,9 @@ while running:
         game.pause = True
         pause_menu.update(screen)
     elif mode == 'transition':
-        transition_menu.update(screen)
+        transition_menu.update(screen, game.count_stars())
     elif mode == 'passed':
-        passed_menu.update(screen)
+        passed_menu.update(screen, game.count_stars())
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()

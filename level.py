@@ -94,6 +94,16 @@ class Level:
                     door_tile = Door((x, y), image_door)
                     self.door.add(door_tile)
 
+    def count_stars(self):
+        c = 0
+        if not self.stars1:
+            c += 1
+        if not self.stars2:
+            c += 1
+        if not self.stars3:
+            c += 1
+        return c
+
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
