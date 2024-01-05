@@ -2,6 +2,7 @@ from tiles import *
 from settings import *
 from player import Player
 from functions import load_image
+import sqlite3
 
 
 class Level:
@@ -154,8 +155,10 @@ class Level:
         if self.door.sprite.rect.colliderect(player.rect):
             if self.level_index + 1 > len(self.levels) - 1:
                 change_mode('passed')
+                self.update_database()
                 self.pause = True
             else:
+                self.update_database()
                 change_mode('transition')
                 self.pause = True
         player.left_collide = f1
@@ -261,6 +264,17 @@ class Level:
         self.level_index = 0
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
+
+    def update_database(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        cursor = con.cursor()
+        stars_game = self.count_stars()
+        stars_db = cursor.execute(f"SELECT stars FROM levels WHERE level_id = {self.level_index}").fetchall()[0][0]
+        if stars_db < stars_game:
+            cursor.execute(f"UPDATE levels SET passed = 1, stars = {self.count_stars()} "
+                           f"WHERE level_id = {self.level_index}")
+        con.commit()
+        con.close()
 
     def run(self):
         if not self.pause:
