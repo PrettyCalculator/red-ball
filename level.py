@@ -1,8 +1,7 @@
-import pygame
-from tiles import *
+from tiles import Tile
 from settings import *
 from player import Player
-from functions import load_image, initialization
+from functions import load_image
 
 
 class Level:
@@ -24,9 +23,8 @@ class Level:
         self.pump_tiles = pygame.sprite.Group()
         self.repump_tiles = pygame.sprite.Group()
         self.water_tiles = pygame.sprite.Group()
-        self.star1 = pygame.sprite.GroupSingle()
-        self.star2 = pygame.sprite.GroupSingle()
-        self.star3 = pygame.sprite.GroupSingle()
+        self.star1, self.star2, self.star3 = (pygame.sprite.GroupSingle(), pygame.sprite.GroupSingle(),
+                                              pygame.sprite.GroupSingle())
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
         self.lava = pygame.sprite.Group()
@@ -73,33 +71,25 @@ class Level:
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if cell == "X":
-                    tile = Tile((x, y), image_wall)
-                    self.tiles.add(tile)
+                    self.tiles.add(Tile((x, y), image_wall))
                 elif cell == "P":
-                    player_sprite = Player((x, y))
-                    self.player.add(player_sprite)
+                    self.player.add(Player((x, y)))
                 elif cell == 'J':
-                    jump_tile = Tile((x, y), image_jump)
-                    self.jump_tiles.add(jump_tile)
+                    self.jump_tiles.add(Tile((x, y), image_jump))
                 elif cell == '1':
-                    pump_tile = Tile((x, y), image_pump)
-                    self.pump_tiles.add(pump_tile)
+                    self.pump_tiles.add(Tile((x, y), image_pump))
                 elif cell == '2':
-                    repump_tile = Tile((x, y), image_repump)
-                    self.repump_tiles.add(repump_tile)
+                    self.repump_tiles.add(Tile((x, y), image_repump))
                 elif cell == 'W':
-                    water_tile = Tile((x, y), image_water)
-                    self.water_tiles.add(water_tile)
+                    self.water_tiles.add(Tile((x, y), image_water))
                 elif cell == "S":
-                    star_tile = Tile((x, y + 30), image_star)
-                    self.star1.add(star_tile)
+                    self.star1.add(Tile((x, y + 30), image_star))
                 elif cell == "s":
-                    star_tile = Tile((x, y + 30), image_star)
-                    self.star2.add(star_tile)
+                    self.star2.add(Tile((x, y + 30), image_star))
                 elif cell == "c":
-                    star_tile = Tile((x, y + 30), image_star)
-                    self.star3.add(star_tile)
+                    self.star3.add(Tile((x, y + 30), image_star))
                 elif cell == "K":
+                    self.posts.add(Tile((x, y + 36), image_post))
                     post_tile = Tile((x, y + 36), image_post)
                     self.posts.add(post_tile)
                 elif cell == 'D':
@@ -131,44 +121,38 @@ class Level:
         player.rect.x += player.direction.x * player.speed
         f1 = False
         f2 = False
-        for sprite in self.tiles.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0:
-                    player.rect.left = sprite.rect.right
-                    f1 = True
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-                    f2 = True
-        for sprite in self.pump_tiles.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0:
-                    player.rect.left = sprite.rect.right
-                    f1 = True
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-                    f2 = True
-                if not player.is_big:
-                    player.change_size(True)
-        for sprite in self.repump_tiles.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0:
-                    player.rect.left = sprite.rect.right
-                    f1 = True
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-                    f2 = True
-                if player.is_big:
-                    player.change_size(False)
-        if self.door.sprite.rect.colliderect(player.rect):
-            pass
+        for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
+            if player.direction.x < 0:
+                player.rect.left = sprite.rect.right
+                f1 = True
+            elif player.direction.x > 0:
+                player.rect.right = sprite.rect.left
+                f2 = True
+        for sprite in pygame.sprite.spritecollide(player, self.pump_tiles, False):
+            if player.direction.x < 0:
+                player.rect.left = sprite.rect.right
+                f1 = True
+            elif player.direction.x > 0:
+                player.rect.right = sprite.rect.left
+                f2 = True
+            if not player.is_big:
+                player.change_size(True)
+        for sprite in pygame.sprite.spritecollide(player, self.repump_tiles, False):
+            if player.direction.x < 0:
+                player.rect.left = sprite.rect.right
+                f1 = True
+            elif player.direction.x > 0:
+                player.rect.right = sprite.rect.left
+                f2 = True
+            if player.is_big:
+                player.change_size(False)
         player.left_collide = f1
         player.right_collide = f2
 
     def vertical_movement_collision(self):
         player = self.player.sprite
-        wall = self.tiles.sprites()
         player.apply_gravity()
-        for sprite in self.tiles.sprites():
+        for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.is_double_jump = False
@@ -178,7 +162,7 @@ class Level:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
                 player.is_double_jump = False
-        for sprite in self.jump_tiles.sprites():
+        for sprite in pygame.sprite.spritecollide(player, self.jump_tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
@@ -188,7 +172,7 @@ class Level:
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
-        for sprite in self.pump_tiles.sprites():
+        for sprite in pygame.sprite.spritecollide(player, self.pump_tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.is_double_jump = False
@@ -200,7 +184,7 @@ class Level:
                 if not player.is_big:
                     player.change_size(True)
                 player.is_double_jump = False
-        for sprite in self.repump_tiles.sprites():
+        for sprite in pygame.sprite.spritecollide(player, self.repump_tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.is_double_jump = False
@@ -280,6 +264,7 @@ class Level:
             self.repump_tiles.draw(self.display_surface)
             self.water_tiles.update(self.world_shift)
             self.water_tiles.draw(self.display_surface)
+
             self.posts.update(self.world_shift)
             self.posts.draw(self.display_surface)
             self.door.update(self.world_shift)
