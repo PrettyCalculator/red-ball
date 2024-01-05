@@ -82,11 +82,8 @@ class Level:
                     self.star3.add(Tile((x, y + 30), image_star))
                 elif cell == "K":
                     self.posts.add(Tile((x, y + 36), image_post))
-                    post_tile = Tile((x, y + 36), image_post)
-                    self.posts.add(post_tile)
                 elif cell == 'D':
-                    door_tile = Tile((x, y), image_door)
-                    self.door.add(door_tile)
+                    self.door.add(Tile((x, y), image_door))
 
     def count_stars(self):
         c = 0
