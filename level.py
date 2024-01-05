@@ -24,9 +24,13 @@ class Level:
         self.pump_tiles = pygame.sprite.Group()
         self.repump_tiles = pygame.sprite.Group()
         self.water_tiles = pygame.sprite.Group()
-        self.star1, self.star2, self.star3 = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
+        self.star1 = pygame.sprite.GroupSingle()
+        self.star2 = pygame.sprite.GroupSingle()
+        self.star3 = pygame.sprite.GroupSingle()
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
+        self.lava = pygame.sprite.Group()
+        self.monstr = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -49,6 +53,12 @@ class Level:
         image_door = load_image('door.png', -1)
         image_door = pygame.transform.scale(image_door, (tile_size + 7, tile_size + 7))
 
+        image_lava = load_image('lava.jpg', -1)
+        image_lava = pygame.transform.scale(image_lava, (tile_size, tile_size))
+
+        image_monstr = load_image('monstr2.png', -1)
+        image_monstr = pygame.transform.scale(image_monstr, (tile_size, tile_size))
+
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
 
@@ -69,32 +79,38 @@ class Level:
                     player_sprite = Player((x, y))
                     self.player.add(player_sprite)
                 elif cell == 'J':
-                    jump_tile = JumpTile((x, y), image_jump)
+                    jump_tile = Tile((x, y), image_jump)
                     self.jump_tiles.add(jump_tile)
                 elif cell == '1':
-                    pump_tile = PumpTile((x, y), image_pump)
+                    pump_tile = Tile((x, y), image_pump)
                     self.pump_tiles.add(pump_tile)
                 elif cell == '2':
-                    repump_tile = PumpTile((x, y), image_repump)
+                    repump_tile = Tile((x, y), image_repump)
                     self.repump_tiles.add(repump_tile)
                 elif cell == 'W':
-                    water_tile = WaterTile((x, y), image_water)
+                    water_tile = Tile((x, y), image_water)
                     self.water_tiles.add(water_tile)
                 elif cell == "S":
-                    star_tile = Star((x, y + 30), image_star)
+                    star_tile = Tile((x, y + 30), image_star)
                     self.star1.add(star_tile)
                 elif cell == "s":
-                    star_tile = Star((x, y + 30), image_star)
+                    star_tile = Tile((x, y + 30), image_star)
                     self.star2.add(star_tile)
                 elif cell == "c":
-                    star_tile = Star((x, y + 30), image_star)
+                    star_tile = Tile((x, y + 30), image_star)
                     self.star3.add(star_tile)
                 elif cell == "K":
-                    post_tile = Post((x, y + 36), image_post)
+                    post_tile = Tile((x, y + 36), image_post)
                     self.posts.add(post_tile)
                 elif cell == 'D':
-                    door_tile = Door((x, y), image_door)
+                    door_tile = Tile((x, y), image_door)
                     self.door.add(door_tile)
+                elif cell == 'L':
+                    lava_tile = Tile((x, y), image_lava)
+                    self.lava.add(lava_tile)
+                elif cell == 'M':
+                    monstr_tile = Tile((x, y), image_monstr)
+                    self.monstr.add(monstr_tile)
 
     def scroll_x(self):
         player = self.player.sprite
@@ -150,6 +166,7 @@ class Level:
 
     def vertical_movement_collision(self):
         player = self.player.sprite
+        wall = self.tiles.sprites()
         player.apply_gravity()
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
@@ -196,35 +213,38 @@ class Level:
                     player.change_size(False)
                 player.is_double_jump = False
 
-        for sprite in self.star1.sprites():
-            if sprite.rect.colliderect(player.rect) and self.stars1:
-                self.stars1 = False
-                self.num_star += 1
-            if self.stars1:
-                self.star1.update(self.world_shift)
-                self.star1.draw(self.display_surface)
-            if self.num_star < 1:
-                self.display_surface.blit(self.small_stars, (-30, -100, 0, 0))
+        for sprite in self.lava.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.setup_level(self.level_data)
+                player.rect.x = 350
+                player.rect.y = 2
 
-        for sprite in self.star2.sprites():
-            if sprite.rect.colliderect(player.rect) and self.stars2:
-                self.stars2 = False
-                self.num_star += 1
-            if self.stars2:
-                self.star2.update(self.world_shift)
-                self.star2.draw(self.display_surface)
-            if self.num_star < 2:
-                self.display_surface.blit(self.small_stars, (30, -100, 20, 20))
+        if self.star1.sprite.rect.colliderect(player.rect) and self.stars1:
+            self.stars1 = False
+            self.num_star += 1
+        if self.stars1:
+            self.star1.update(self.world_shift)
+            self.star1.draw(self.display_surface)
+        if self.num_star < 1:
+            self.display_surface.blit(self.small_stars, (-30, -100, 0, 0))
 
-        for sprite in self.star3.sprites():
-            if sprite.rect.colliderect(player.rect) and self.stars3:
-                self.stars3 = False
-                self.num_star += 1
-            if self.stars3:
-                self.star3.update(self.world_shift)  # звезда
-                self.star3.draw(self.display_surface)
-            if self.num_star < 3:
-                self.display_surface.blit(self.small_stars, (90, -100, 20, 20))
+        if self.star2.sprite.rect.colliderect(player.rect) and self.stars2:
+            self.stars2 = False
+            self.num_star += 1
+        if self.stars2:
+            self.star2.update(self.world_shift)
+            self.star2.draw(self.display_surface)
+        if self.num_star < 2:
+            self.display_surface.blit(self.small_stars, (30, -100, 20, 20))
+
+        if self.star3.sprite.rect.colliderect(player.rect) and self.stars3:
+            self.stars3 = False
+            self.num_star += 1
+        if self.stars3:
+            self.star3.update(self.world_shift)  # звезда
+            self.star3.draw(self.display_surface)
+        if self.num_star < 3:
+            self.display_surface.blit(self.small_stars, (90, -100, 20, 20))
 
         if self.num_star == 1:
             self.display_surface.blit(self.stars, (-250, -113, 0, 0))
@@ -241,6 +261,7 @@ class Level:
                 self.setup_level(self.level_data)
                 player.rect.x = 350
                 player.rect.y = 2
+
         if player.rect.y >= 600:
             self.setup_level(self.level_data)
             player.rect.x = 350
@@ -263,6 +284,10 @@ class Level:
             self.posts.draw(self.display_surface)
             self.door.update(self.world_shift)
             self.door.draw(self.display_surface)
+            self.lava.update(self.world_shift)
+            self.lava.draw(self.display_surface)
+            self.monstr.update(self.world_shift)
+            self.monstr.draw(self.display_surface)
 
             self.scroll_x()
 

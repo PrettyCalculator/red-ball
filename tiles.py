@@ -1,7 +1,4 @@
-import pygame
-from functions import load_image
 from settings import *
-
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, image):
@@ -13,29 +10,4 @@ class Tile(pygame.sprite.Sprite):
         self.rect.x += x_shift
 
 
-class JumpTile(Tile):
-    pass
 
-
-class PumpTile(Tile):
-    pass
-
-
-class RePumpTile(Tile):
-    pass
-
-
-class WaterTile(Tile):
-    pass
-
-
-class Star(Tile):
-    pass
-
-
-class Post(Tile):
-    pass
-
-
-class Door(Tile):
-    pass
