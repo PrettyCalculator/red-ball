@@ -3,6 +3,7 @@ from settings import *
 from player import Player
 from functions import load_image
 from monster import Monster
+import sqlite3
 
 
 class Level:
@@ -89,16 +90,23 @@ class Level:
                     self.star3.add(Tile((x, y + 30), image_star))
                 elif cell == "K":
                     self.posts.add(Tile((x, y + 36), image_post))
-                    post_tile = Tile((x, y + 36), image_post)
-                    self.posts.add(post_tile)
-                elif cell == 'D':
-                    door_tile = Tile((x, y), image_door)
-                    self.door.add(door_tile)
                 elif cell == 'L':
                     lava_tile = Tile((x, y), image_lava)
                     self.lava.add(lava_tile)
                 elif cell == 'M':
                     self.monster.add(Monster((x, y)))
+                elif cell == 'D':
+                    self.door.add(Tile((x, y), image_door))
+
+    def count_stars(self):
+        c = 0
+        if not self.stars1:
+            c += 1
+        if not self.stars2:
+            c += 1
+        if not self.stars3:
+            c += 1
+        return c
 
     def scroll_x(self):
         player = self.player.sprite
@@ -144,6 +152,15 @@ class Level:
                 f2 = True
             if player.is_big:
                 player.change_size(False)
+        if self.door.sprite.rect.colliderect(player.rect):
+            if self.level_index + 1 > len(self.levels) - 1:
+                change_mode('passed')
+                self.update_database()
+                self.pause = True
+            else:
+                self.update_database()
+                change_mode('transition')
+                self.pause = True
         player.left_collide = f1
         player.right_collide = f2
 
@@ -259,6 +276,30 @@ class Level:
             self.setup_level(self.level_data)
             player.rect.x = 350
             player.rect.y = 20
+
+    def change_level(self, value=''):
+        self.level_index += 1
+        if self.level_index > len(self.levels) - 1:
+            self.to_start()
+            change_mode('passed')
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
+
+    def to_start(self):
+        self.level_index = 0
+        self.level_data = self.levels[self.level_index]
+        self.setup_level(self.level_data)
+
+    def update_database(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        cursor = con.cursor()
+        stars_game = self.count_stars()
+        stars_db = cursor.execute(f"SELECT stars FROM levels WHERE level_id = {self.level_index}").fetchall()[0][0]
+        if stars_db < stars_game:
+            cursor.execute(f"UPDATE levels SET passed = 1, stars = {self.count_stars()} "
+                           f"WHERE level_id = {self.level_index}")
+        con.commit()
+        con.close()
 
     def run(self):
         if not self.pause:
