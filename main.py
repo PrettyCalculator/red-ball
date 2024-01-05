@@ -14,7 +14,6 @@ pygame.display.set_caption("Шарик")
 
 home = HomeScreen(homescreen_map, screen)
 level = LevelScreen(homescreen_map, screen)
-game = Level(screen)
 
 clock = pygame.time.Clock()
 bg_surf = load_image('background.jpg')
@@ -28,6 +27,7 @@ sound.background()
 
 running = True
 fps = 60
+count = 0
 while running:
     from settings import mode
 
@@ -68,18 +68,26 @@ while running:
                     game.to_start()
 
     if mode == 'home':
+        count = 0
         screen.fill(pygame.Color("#87cefa"))
         home.run()
     elif mode == 'level':
+        count = 0
         screen.fill(pygame.Color("#87cefa"))
         level.run()
     elif mode == 'game':
+        if count == 0:
+            from settings import num
+
+            game = Level(screen, num)
+            count += 1
         bg_surf = pygame.transform.scale(bg_surf, (screen_width, screen_height))
         screen.blit(bg_surf, (0, 0))
         game.pause = False
         game.run()
         pause_button.update(screen)
     elif mode == 'exit':
+        count = 0
         running = False
     elif mode == 'pause':
         game.pause = True

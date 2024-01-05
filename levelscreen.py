@@ -2,6 +2,7 @@ from settings import *
 from tiles import Tile
 from player import Player
 from functions import load_image
+import sqlite3
 
 
 class LevelScreen:
@@ -16,10 +17,27 @@ class LevelScreen:
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
+        self.level_close = load_image('level_close.png')
 
         self.btn_rect1 = pygame.Rect(250, 100, tile_size + 50, tile_size + 50)
         self.btn_rect2 = pygame.Rect(550, 100, tile_size + 50, tile_size + 50)
         self.btn_rect3 = pygame.Rect(850, 100, tile_size + 50, tile_size + 50)
+        self.btn_exit = pygame.Rect(950, 550, 200, 40)
+
+        self.all = [[self.display_surface, pygame.Color('#b30000'), self.btn_rect1, 352, 2],
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect2, 60, 2],
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect3, 60, 2]]
+
+        self.coordinates = [(250, 100), (550, 100), (850, 100)]
+
+        self.text1 = font.render("1", True, pygame.Color('#a8d8ff'))
+        self.text2 = font.render("2", True, pygame.Color('#a8d8ff'))
+        self.text3 = font.render("3", True, pygame.Color('#a8d8ff'))
+        self.exit = font.render("Exit", True, pygame.Color('#a8d8ff'))
+
+        self.all_text = [(self.text1, (300, 137)),
+                         (self.text2, (600, 137)),
+                         (self.text3, (900, 137))]
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -42,21 +60,43 @@ class LevelScreen:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
 
+    def windows(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        cursor = con.cursor()
+        self.result = cursor.execute("""SELECT * FROM levels""").fetchall()
+        last = 0
+        for i in range(len(self.all)):
+            if self.result[i][1] == 1 or last == 1 or i == 0:
+                pygame.draw.rect(*self.all[i])
+                self.display_surface.blit(*self.all_text[i])
+                last = self.result[i][1]
+            else:
+                level = pygame.transform.scale(self.level_close, (118, 118))
+                screen.blit(level, self.coordinates[i])
+        con.commit()
+        con.close()
+
     def run(self):
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
-        pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_rect1, 352, 31)
-        pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_rect2, 60, 31)
-        pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_rect3, 60, 31)
+        pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_exit, 20, 5)
+        self.display_surface.blit(self.exit, (1020, 555))
+        self.windows()
         mouse_presses = pygame.mouse.get_pressed()
         if mouse_presses[0]:
             mouse_pos = pygame.mouse.get_pos()
             if self.btn_rect1.collidepoint(mouse_pos):
-                print(1)
-            elif self.btn_rect2.collidepoint(mouse_pos):
-                print(2)
-            elif self.btn_rect3.collidepoint(mouse_pos):
+                change_num(0)
                 change_mode('game')
+            elif self.btn_rect2.collidepoint(mouse_pos) and self.result[0][1] == 1:
+                change_num(1)
+                change_mode('game')
+            elif self.btn_rect3.collidepoint(mouse_pos) and self.result[1][1] == 1:
+                change_num(2)
+                change_mode('game')
+            elif self.btn_exit.collidepoint(mouse_pos):
+                change_num(3)
+                change_mode('home')
         self.player.update()
         self.vertical_movement_collision()
         self.player.draw(self.display_surface)

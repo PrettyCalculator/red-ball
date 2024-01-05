@@ -6,6 +6,11 @@ def change_mode(value):
     mode = value
 
 
+def change_num(value):
+    global num
+    num = value
+
+
 level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
@@ -50,7 +55,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map3, level_map1]
+levels = [level_map1, level_map2, level_map3]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200
@@ -60,3 +65,4 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 mode = 'home'
 font = pygame.font.Font(None, 50)
 volume = 1
+num = 0

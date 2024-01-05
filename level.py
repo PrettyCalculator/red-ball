@@ -7,11 +7,11 @@ import sqlite3
 
 
 class Level:
-    def __init__(self, surface):
+    def __init__(self, surface, num):
         # настройка уровня
         self.display_surface = surface
         self.levels = levels
-        self.level_index = 0
+        self.level_index = num
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
         self.world_shift = 0
@@ -55,7 +55,6 @@ class Level:
 
         image_lava = load_image('lava.jpg', -1)
         image_lava = pygame.transform.scale(image_lava, (tile_size, tile_size))
-
 
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
@@ -223,6 +222,12 @@ class Level:
                     player.change_size(False)
                 player.is_double_jump = False
 
+        for sprite in self.monster.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.setup_level(self.level_data)
+                player.rect.x = 350
+                player.rect.y = 2
+
         for sprite in self.lava.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
@@ -286,7 +291,7 @@ class Level:
         self.setup_level(self.level_data)
 
     def to_start(self):
-        self.level_index = 0
+        self.level_index = num
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
 
@@ -314,11 +319,11 @@ class Level:
             self.repump_tiles.draw(self.display_surface)
             self.water_tiles.update(self.world_shift)
             self.water_tiles.draw(self.display_surface)
-
             self.posts.update(self.world_shift)
             self.posts.draw(self.display_surface)
             self.door.update(self.world_shift)
             self.door.draw(self.display_surface)
+
             self.lava.update(self.world_shift)
             self.lava.draw(self.display_surface)
 
