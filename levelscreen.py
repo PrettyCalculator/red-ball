@@ -44,6 +44,7 @@ class LevelScreen:
         self.text2 = font.render("2", True, pygame.Color('#a8d8ff'))
         self.text3 = font.render("3", True, pygame.Color('#a8d8ff'))
         self.exit = font.render("Exit", True, pygame.Color('#a8d8ff'))
+        self.text = font.render("Выберите уровень", True, pygame.Color('Black'))
 
         self.all_text = [(self.text1, (300, 137)),
                          (self.text2, (600, 137)),
@@ -101,6 +102,7 @@ class LevelScreen:
         self.tiles.draw(self.display_surface)
         pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_exit, 20, 5)
         self.display_surface.blit(self.exit, (1020, 555))
+        self.display_surface.blit(self.text, (450, 30))
         self.windows()
         mouse_presses = pygame.mouse.get_pressed()
         if mouse_presses[0]:
