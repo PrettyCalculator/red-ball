@@ -239,7 +239,7 @@ class Level:
             player.rect.x = 350
             player.rect.y = 20
 
-    def change_level(self, value=''):
+    def change_level(self):
         self.level_index += 1
         if self.level_index > len(self.levels) - 1:
             self.to_start()

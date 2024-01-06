@@ -1,6 +1,7 @@
 from functions import *
 from settings import *
 from sound import Sound
+import sqlite3
 
 
 class Pause(pygame.sprite.Sprite):
@@ -87,13 +88,12 @@ class PauseMenu:
     exit2_image_big = pygame.transform.scale(load_image('pause_exit2.jpg'), (exit2_size[0] + 20, exit2_size[1] + 20))
 
     value_image_0 = font.render("0%", True, pygame.Color('black'))
-    value_image_25 = font.render("25%", True, pygame.Color('black'))
+    value_image_35 = font.render("35%", True, pygame.Color('black'))
     value_image_75 = font.render("75%", True, pygame.Color('black'))
     value_image_100 = font.render("100%", True, pygame.Color('black'))
 
     def __init__(self):
         self.options = False
-        self.sound = Sound()
 
         self.surface_size = PauseMenu.surface_size
         self.surface_pos = PauseMenu.surface_pos
@@ -141,7 +141,7 @@ class PauseMenu:
         self.check_surface4_image_rect = self.check_surface4_image.get_rect(topleft=self.check_surface4_pos)
 
         self.check_size = 70, 70
-        self.check_pos = self.check_surface4_pos
+        self.check_pos = self.get_check_pos()
         self.check_image = pygame.transform.scale(load_image('check_mark.png', -1), self.check_size)
         self.check_image_rect = self.check_image.get_rect(topleft=self.check_pos)
 
@@ -151,47 +151,69 @@ class PauseMenu:
 
         self.value_pos1 = 640, 272
         self.value_pos2 = 770, 370
-        self.value_image = PauseMenu.value_image_100
+        self.value_image = self.get_value_image()
+
+    def get_check_pos(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        value = con.cursor().execute('SELECT value FROM music').fetchall()[0][0]
+        con.close()
+        if value == 0:
+            return self.check_surface1_pos
+        if value == 0.35:
+            return self.check_surface2_pos
+        if value == 0.75:
+            return self.check_surface3_pos
+        if value == 1:
+            return self.check_surface4_pos
+
+    def get_value_image(self):
+        con = sqlite3.connect('data/db/database.sqlite')
+        value = con.cursor().execute('SELECT value FROM music').fetchall()[0][0]
+        con.close()
+        if value == 0:
+            return PauseMenu.value_image_0
+        if value == 0.35:
+            return PauseMenu.value_image_35
+        if value == 0.75:
+            return PauseMenu.value_image_75
+        if value == 1:
+            return PauseMenu.value_image_100
 
     def get_clicked(self, pos):
-        if self.exit_image_rect.collidepoint(pos) or self.resume_image_rect.collidepoint(pos):
+        if self.exit_image_rect.collidepoint(pos):
             change_mode('game')
             self.options = False
-            self.sound.click()
+        elif self.resume_image_rect.collidepoint(pos):
+            change_mode('game')
+            return 'resume'
         elif self.options:
             if self.check_surface1_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface1_pos
-                self.sound.click()
-                self.sound.click_sound.set_volume(0)
                 self.value_image = PauseMenu.value_image_0
-                return 0.01
+                self.update_database(0.00)
+                return 'volume'
             if self.check_surface2_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface2_pos
-                self.sound.click()
-                self.sound.click_sound.set_volume(0.25)
-                self.value_image = PauseMenu.value_image_25
-                return 0.25
+                self.value_image = PauseMenu.value_image_35
+                self.update_database(0.35)
+                return 'volume'
             if self.check_surface3_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface3_pos
-                self.sound.click()
-                self.sound.click_sound.set_volume(0.7)
                 self.value_image = PauseMenu.value_image_75
-                return 0.75
+                self.update_database(0.75)
+                return 'volume'
             if self.check_surface4_image_rect.collidepoint(pos):
                 self.check_pos = self.check_surface4_pos
-                self.sound.click()
-                self.sound.click_sound.set_volume(1.0)
                 self.value_image = PauseMenu.value_image_100
-                return 1
+                self.update_database(1.0)
+                return 'volume'
+        elif self.exit2_image_rect.collidepoint(pos):
+            change_mode('home')
+            self.options = False
+            return 'exit'
         else:
-            if self.exit2_image_rect.collidepoint(pos):
-                change_mode('home')
-                self.options = False
-                self.sound.click()
-                return 'exit'
-            elif self.options_image_rect.collidepoint(pos):
-                self.options = True
-                self.sound.click()
+            self.options_image_rect.collidepoint(pos)
+            self.options = True
 
     def get_focused(self, pos):
         if self.exit_image_rect.collidepoint(pos):
@@ -218,6 +240,12 @@ class PauseMenu:
         else:
             self.exit2_image = PauseMenu.exit2_image
             self.exit2_pos = PauseMenu.exit2_pos
+
+    def update_database(self, value):
+        con = sqlite3.connect('data/db/database.sqlite')
+        con.cursor().execute(f"UPDATE music SET value = {value}")
+        con.commit()
+        con.close()
 
     def update(self, screen):
         screen.blit(self.surface_image, self.surface_pos)
@@ -258,11 +286,9 @@ class TransitionMenu(PauseMenu):
     def get_clicked(self, pos):
         if self.resume_image_rect.collidepoint(pos):
             change_mode('game')
-            self.sound.click()
             return 'resume'
         elif self.exit2_image_rect.collidepoint(pos):
             change_mode('home')
-            self.sound.click()
             return 'exit'
 
     def get_focused(self, pos):
@@ -302,7 +328,6 @@ class PassedMenu(TransitionMenu):
     def get_clicked(self, pos):
         if self.exit2_image_rect.collidepoint(pos):
             change_mode('home')
-            self.sound.click()
             return 'exit'
 
     def get_focused(self, pos):

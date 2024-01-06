@@ -1,4 +1,3 @@
-from settings import *
 from level import Level
 from homescreen import HomeScreen
 from pause import *
@@ -9,7 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 all_sprites = pygame.sprite.Group()
 sprite = pygame.sprite.Sprite()
-pygame.display.set_caption("Шарик")
+pygame.display.set_caption('Шарик')
 
 home = HomeScreen(homescreen_map, screen)
 game = Level(screen)
@@ -46,8 +45,10 @@ while running:
                 value = pause_menu.get_clicked(event.pos)
                 if value == 'exit':
                     game.to_start()
-                elif value:
-                    sound.background_sound.set_volume(value)
+                elif value == 'resume':
+                    game.setup_level(game.level_data)
+                elif value == 'volume':
+                    sound.update_volume()
         elif mode == 'transition':
             if event.type == pygame.MOUSEMOTION:
                 transition_menu.get_focused(event.pos)

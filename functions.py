@@ -1,4 +1,4 @@
-import pygame
+import sqlite3
 import os
 from settings import *
 
@@ -20,3 +20,10 @@ def load_image(name, colorkey=None):
 def initialization():
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
+
+
+def get_volume():
+    con = sqlite3.connect('data/db/database.sqlite')
+    value = con.cursor().execute(f"SELECT value FROM music").fetchall()[0][0]
+    con.close()
+    return value
