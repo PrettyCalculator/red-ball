@@ -17,6 +17,16 @@ class LevelScreen:
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
+
+        self.star0 = load_image('star_0.png', -1)
+        self.star0 = pygame.transform.scale(self.star0, (80, 35))
+        self.star1 = load_image('star_1.png', -1)
+        self.star1 = pygame.transform.scale(self.star1, (80, 35))
+        self.star2 = load_image('star_2.png', -1)
+        self.star2 = pygame.transform.scale(self.star2, (80, 35))
+        self.star3 = load_image('star_3.png', -1)
+        self.star3 = pygame.transform.scale(self.star3, (80, 35))
+
         self.level_close = load_image('level_close.png')
 
         self.btn_rect1 = pygame.Rect(250, 100, tile_size + 50, tile_size + 50)
@@ -65,11 +75,21 @@ class LevelScreen:
         cursor = con.cursor()
         self.result = cursor.execute("""SELECT * FROM levels""").fetchall()
         last = 0
+        x_pos = [268, 568, 868]
         for i in range(len(self.all)):
             if self.result[i][1] == 1 or last == 1 or i == 0:
                 pygame.draw.rect(*self.all[i])
                 self.display_surface.blit(*self.all_text[i])
                 last = self.result[i][1]
+                if self.result[i][2] == 0:
+                    self.display_surface.blit(self.star0, (x_pos[i], 175))
+                elif self.result[i][2] == 1:
+                    pass
+                    self.display_surface.blit(self.star1, (x_pos[i], 175))
+                elif self.result[i][2] == 2:
+                    self.display_surface.blit(self.star2, (x_pos[i], 175))
+                else:
+                    self.display_surface.blit(self.star3, (x_pos[i], 175))
             else:
                 level = pygame.transform.scale(self.level_close, (118, 118))
                 screen.blit(level, self.coordinates[i])

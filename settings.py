@@ -14,12 +14,12 @@ def change_num(value):
 level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX    P   D        XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
+    'XXXXX    P           XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X   K         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXX   XXX   XXXKKKK   XXXXXX       X          X                  XXXXX        X         XXXXXXXXXXXXXXXXXXXXX',
     'XXXXXc XXX   XXX   XXXXXXX   X        X                  X             XXXXXX     X                   XXXXXXXXXXXXXX',
-    'XXXXXs  XXXXX XXX             X XXX                              KK    XXXXXXX     XX   KK    KK                XXXX',
+    'XXXXXs XXXXX XXX             X XXX                              KK    XXXXXXX     XX   KK    KK                DXXXX',
     'XXXXXS       XXX             X     XXXXJJX                        XXXXXXXXXXXXXXX   X    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXJJXXXXXXXXXJJJXXXXXXXXJJXXXXXXXXX                        XXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 level_map2 = [
