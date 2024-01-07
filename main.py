@@ -23,7 +23,7 @@ passed_menu = PassedMenu()
 
 sound = Sound()
 sound.background()
-
+print(1)
 running = True
 fps = 60
 count = 0
