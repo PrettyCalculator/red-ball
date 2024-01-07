@@ -32,23 +32,36 @@ class LevelScreen:
         self.btn_rect1 = pygame.Rect(250, 100, tile_size + 50, tile_size + 50)
         self.btn_rect2 = pygame.Rect(550, 100, tile_size + 50, tile_size + 50)
         self.btn_rect3 = pygame.Rect(850, 100, tile_size + 50, tile_size + 50)
+        self.btn_rect4 = pygame.Rect(250, 400, tile_size + 50, tile_size + 50)
+        self.btn_rect5 = pygame.Rect(550, 400, tile_size + 50, tile_size + 50)
+        self.btn_rect6 = pygame.Rect(850, 400, tile_size + 50, tile_size + 50)
         self.btn_exit = pygame.Rect(950, 550, 200, 40)
 
-        self.all = [[self.display_surface, pygame.Color('#b30000'), self.btn_rect1, 352, 2],
+        self.all = [[self.display_surface, pygame.Color('#b30000'), self.btn_rect1, 60, 2],
                     [self.display_surface, pygame.Color('#b30000'), self.btn_rect2, 60, 2],
-                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect3, 60, 2]]
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect3, 60, 2],
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect4, 60, 2],
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect5, 60, 2],
+                    [self.display_surface, pygame.Color('#b30000'), self.btn_rect6, 60, 2]]
 
-        self.coordinates = [(250, 100), (550, 100), (850, 100)]
+        self.coordinates = [(250, 100), (550, 100), (850, 100), (250, 400), (550, 400), (850, 400)]
 
         self.text1 = font.render("1", True, pygame.Color('#a8d8ff'))
         self.text2 = font.render("2", True, pygame.Color('#a8d8ff'))
         self.text3 = font.render("3", True, pygame.Color('#a8d8ff'))
+        self.text4 = font.render("4", True, pygame.Color('#a8d8ff'))
+        self.text5 = font.render("5", True, pygame.Color('#a8d8ff'))
+        self.text6 = font.render("6", True, pygame.Color('#a8d8ff'))
+
         self.exit = font.render("Exit", True, pygame.Color('#a8d8ff'))
         self.text = font.render("Выберите уровень", True, pygame.Color('Black'))
 
         self.all_text = [(self.text1, (300, 137)),
                          (self.text2, (600, 137)),
-                         (self.text3, (900, 137))]
+                         (self.text3, (900, 137)),
+                         (self.text4, (300, 437)),
+                         (self.text5, (600, 437)),
+                         (self.text6, (900, 437))]
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -76,21 +89,22 @@ class LevelScreen:
         cursor = con.cursor()
         self.result = cursor.execute("""SELECT * FROM levels""").fetchall()
         last = 0
-        x_pos = [268, 568, 868]
+        x_pos = [268, 568, 868, 268, 568, 868]
+        y_pos = [175, 175, 175, 475, 475, 475]
         for i in range(len(self.all)):
             if self.result[i][1] == 1 or last == 1 or i == 0:
                 pygame.draw.rect(*self.all[i])
                 self.display_surface.blit(*self.all_text[i])
                 last = self.result[i][1]
                 if self.result[i][2] == 0:
-                    self.display_surface.blit(self.star0, (x_pos[i], 175))
+                    self.display_surface.blit(self.star0, (x_pos[i], y_pos[i]))
                 elif self.result[i][2] == 1:
                     pass
-                    self.display_surface.blit(self.star1, (x_pos[i], 175))
+                    self.display_surface.blit(self.star1, (x_pos[i], y_pos[i]))
                 elif self.result[i][2] == 2:
-                    self.display_surface.blit(self.star2, (x_pos[i], 175))
+                    self.display_surface.blit(self.star2, (x_pos[i], y_pos[i]))
                 else:
-                    self.display_surface.blit(self.star3, (x_pos[i], 175))
+                    self.display_surface.blit(self.star3, (x_pos[i], y_pos[i]))
             else:
                 level = pygame.transform.scale(self.level_close, (118, 118))
                 screen.blit(level, self.coordinates[i])
@@ -116,8 +130,16 @@ class LevelScreen:
             elif self.btn_rect3.collidepoint(mouse_pos) and self.result[1][1] == 1:
                 change_num(2)
                 change_mode('game')
-            elif self.btn_exit.collidepoint(mouse_pos):
+            elif self.btn_rect4.collidepoint(mouse_pos) and self.result[2][1] == 1:
                 change_num(3)
+                change_mode('game')
+            elif self.btn_rect5.collidepoint(mouse_pos) and self.result[3][1] == 1:
+                change_num(4)
+                change_mode('game')
+            elif self.btn_rect6.collidepoint(mouse_pos) and self.result[4][1] == 1:
+                change_num(5)
+                change_mode('game')
+            elif self.btn_exit.collidepoint(mouse_pos):
                 change_mode('home')
         self.player.update()
         self.vertical_movement_collision()
