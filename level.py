@@ -225,14 +225,10 @@ class Level:
         for sprite in self.monster.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
-                player.rect.x = 350
-                player.rect.y = 2
 
         for sprite in self.lava.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
-                player.rect.x = 350
-                player.rect.y = 2
 
         if self.star1.sprite.rect.colliderect(player.rect) and self.stars1:
             self.stars1 = False
@@ -274,13 +270,9 @@ class Level:
         for sprite in self.posts.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
-                player.rect.x = 350
-                player.rect.y = 2
 
         if player.rect.y >= 600:
             self.setup_level(self.level_data)
-            player.rect.x = 350
-            player.rect.y = 20
 
     def change_level(self):
         self.level_index += 1
