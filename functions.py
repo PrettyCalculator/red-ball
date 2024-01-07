@@ -17,6 +17,9 @@ def load_image(name, colorkey=None):
     return image
 
 
+
+
+
 def initialization():
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))

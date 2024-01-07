@@ -1,4 +1,3 @@
-import pygame
 from settings import *
 from tiles import Tile
 from player import Player
@@ -61,7 +60,7 @@ class HomeScreen:
         if mouse_presses[0]:
             mouse_pos = pygame.mouse.get_pos()
             if self.btn_rect.collidepoint(mouse_pos):
-                change_mode('game')
+                change_mode('level')
             if self.btn_rect1.collidepoint(mouse_pos):
                 change_mode('exit')
         self.player.update()
