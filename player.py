@@ -1,4 +1,3 @@
-import pygame
 from functions import load_image
 from settings import *
 
@@ -30,8 +29,8 @@ class Player(pygame.sprite.Sprite):
         self.is_double_jump = False
         self.is_big = False
         self.right_collide = False
-        self.left_collide = False
         self.jump_key = False
+        self.left_collide = False
 
     def get_input(self):
         self.jump_key = False
