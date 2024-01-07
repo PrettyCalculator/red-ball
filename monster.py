@@ -8,7 +8,7 @@ class MonsterVertical(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0, 0)
         self.direction.y = -1
         self.rect = self.image.get_rect(topleft=pos)
-        self.speed = 1
+        self.speed = 2
 
     def update(self, x_shift):
         self.rect.y += self.speed * self.direction.y

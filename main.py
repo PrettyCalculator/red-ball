@@ -7,6 +7,7 @@ from sound import Sound
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
+print('privet')
 all_sprites = pygame.sprite.Group()
 sprite = pygame.sprite.Sprite()
 pygame.display.set_caption('Шарик')
