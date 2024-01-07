@@ -13,7 +13,7 @@ def change_num(value):
 
 level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXX                XX                                                                        XXXXXXXXXXXXXXXXXXXX',
+    'XXXXX            M   XX                                                                        XXXXXXXXXXXXXXXXXXXX',
     'XXXXX    P           XX2                                                   XK XX               XXXXXXXXXXXXXXXXXXXX',
     'XXXXX    1 XXXXX     XXXX    XXXK                                         XXX X  K   X         XXXXXXXXXXXXXXXXXXXX',
     'XXXXX  XXXXXXXXX   XXX       XXXXXX          X   X                       XXXX    X             XXXXXXXXXXXXXXXXXXXX',
@@ -35,14 +35,15 @@ level_map2 = [
     'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 level_map3 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXXX                    XXXXX            XXXXXXXXXXX                                       XXXXXXXXXXX',
-    'XXXXXP  M    M    M  M    XXXXX          S XXXXXXXXXXXXXXXXXXXXXXXXXXX                                XXXXXXXXX',
+    'XXXXXX      M  M  M          XXXXX            XXXXXXXXXXX                                       XXXXXXXXXXX',
+    'XXXXXP                    XXXXX          S XXXXXXXXXXXXXXXXXXXXXXXXXXX                                XXXXXXXXX',
     'XXXXX                                 XXXXXXXXXXX XXXXXXXXXXXXX',
     'XXXXXXXXXXLLXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXX  XX  XXXXXXXX     s                                  XXXXXXXXXXXXXXXX',
-    'XXXXXXXXXXXXXXXXXX               c      XXXXXXXX   XXXXXXXXXXX',
-    'XXXXX                                                                                                  DXXXXXXXXXX',
+    'XXXXX                             c      XXXXXXXX   XXXXXXXXXXX',
+    'XXXXXm            X                                                                                     DXXXXXXXXXX',
     'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+
 
 homescreen_map = [
     '',

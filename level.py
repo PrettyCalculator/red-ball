@@ -2,7 +2,7 @@ from tiles import Tile
 from settings import *
 from player import Player
 from functions import load_image
-from monster import Monster
+from monster import *
 import sqlite3
 
 
@@ -30,7 +30,8 @@ class Level:
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
         self.lava = pygame.sprite.Group()
-        self.monster = pygame.sprite.Group()
+        self.monster_vertical = pygame.sprite.Group()
+        self.monster_horizontal = pygame.sprite.Group()
 
         image_wall = load_image('wall.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
@@ -55,6 +56,9 @@ class Level:
 
         image_lava = load_image('lava.jpg', -1)
         image_lava = pygame.transform.scale(image_lava, (tile_size, tile_size))
+
+        image_monster = load_image('monstr2.png', -1)
+        image_monster = pygame.transform.scale(image_monster, (tile_size, tile_size))
 
         self.stars = load_image('small_star1.png', -1)
         self.small_stars = load_image('small_star.png', -1)
@@ -93,9 +97,11 @@ class Level:
                     lava_tile = Tile((x, y), image_lava)
                     self.lava.add(lava_tile)
                 elif cell == 'M':
-                    self.monster.add(Monster((x, y)))
+                    self.monster_vertical.add(MonsterVertical((x, y), image_monster))
                 elif cell == 'D':
                     self.door.add(Tile((x, y), image_door))
+                elif cell == 'm':
+                    self.monster_horizontal.add(MonsterHorizontal((x, y), image_monster))
 
     def count_stars(self):
         c = 0
@@ -127,30 +133,41 @@ class Level:
         f1 = False
         f2 = False
         for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
-            if player.direction.x < 0:
-                player.rect.left = sprite.rect.right
-                f1 = True
-            elif player.direction.x > 0:
-                player.rect.right = sprite.rect.left
-                f2 = True
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                    f1 = True
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    f2 = True
+        for sprite in pygame.sprite.spritecollide(player, self.jump_tiles, False):
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                    f1 = True
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    f2 = True
         for sprite in pygame.sprite.spritecollide(player, self.pump_tiles, False):
-            if player.direction.x < 0:
-                player.rect.left = sprite.rect.right
-                f1 = True
-            elif player.direction.x > 0:
-                player.rect.right = sprite.rect.left
-                f2 = True
-            if not player.is_big:
-                player.change_size(True)
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                    f1 = True
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    f2 = True
+                if not player.is_big:
+                    player.change_size(True)
         for sprite in pygame.sprite.spritecollide(player, self.repump_tiles, False):
-            if player.direction.x < 0:
-                player.rect.left = sprite.rect.right
-                f1 = True
-            elif player.direction.x > 0:
-                player.rect.right = sprite.rect.left
-                f2 = True
-            if player.is_big:
-                player.change_size(False)
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                    f1 = True
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    f2 = True
+                if player.is_big:
+                    player.change_size(False)
         if self.door.sprite.rect.colliderect(player.rect):
             if self.level_index + 1 > len(self.levels) - 1:
                 change_mode('passed')
@@ -164,7 +181,7 @@ class Level:
         player.right_collide = f2
 
     def monster_vertical_collision(self):
-        for monster in self.monster.sprites():
+        for monster in self.monster_vertical.sprites():
             for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
                 if sprite.rect.colliderect(monster.rect):
                     if monster.direction.y < 0:
@@ -173,6 +190,33 @@ class Level:
                     elif monster.direction.y > 0:
                         monster.rect.bottom = sprite.rect.top
                         monster.direction.y = - monster.direction.y
+        for monster in self.monster_vertical.sprites():
+            for sprite in pygame.sprite.spritecollide(monster, self.jump_tiles, False):
+                if sprite.rect.colliderect(monster.rect):
+                    if monster.direction.y < 0:
+                        monster.rect.top = sprite.rect.bottom
+                        monster.direction.y = - monster.direction.y
+                    elif monster.direction.y > 0:
+                        monster.rect.bottom = sprite.rect.top
+                        monster.direction.y = - monster.direction.y
+
+    def monster_horizontal_collision(self):
+        for monster in self.monster_horizontal.sprites():
+            for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
+                if sprite.rect.colliderect(monster.rect):
+                    if monster.direction.x < 0:
+                        monster.rect.left = sprite.rect.right
+                    elif monster.direction.x > 0:
+                        monster.rect.right = sprite.rect.left
+                    monster.direction.x = - monster.direction.x
+        for monster in self.monster_horizontal.sprites():
+            for sprite in pygame.sprite.spritecollide(monster, self.jump_tiles, False):
+                if sprite.rect.colliderect(monster.rect):
+                    if monster.direction.x < 0:
+                        monster.rect.left = sprite.rect.right
+                    elif monster.direction.x > 0:
+                        monster.rect.right = sprite.rect.left
+                    monster.direction.x = - monster.direction.x
 
     def vertical_movement_collision(self):
         player = self.player.sprite
@@ -222,17 +266,14 @@ class Level:
                     player.change_size(False)
                 player.is_double_jump = False
 
-        for sprite in self.monster.sprites():
-            if sprite.rect.colliderect(player.rect):
-                self.setup_level(self.level_data)
-                player.rect.x = 350
-                player.rect.y = 2
+        if pygame.sprite.spritecollide(player, self.monster_vertical, False):
+            self.setup_level(self.level_data)
 
-        for sprite in self.lava.sprites():
-            if sprite.rect.colliderect(player.rect):
-                self.setup_level(self.level_data)
-                player.rect.x = 350
-                player.rect.y = 2
+        if pygame.sprite.spritecollide(player, self.monster_horizontal, False):
+            self.setup_level(self.level_data)
+
+        if pygame.sprite.spritecollide(player, self.lava, False):
+            self.setup_level(self.level_data)
 
         if self.star1.sprite.rect.colliderect(player.rect) and self.stars1:
             self.stars1 = False
@@ -328,8 +369,12 @@ class Level:
             self.lava.draw(self.display_surface)
 
             self.monster_vertical_collision()
-            self.monster.update(self.world_shift)
-            self.monster.draw(self.display_surface)
+            self.monster_vertical.update(self.world_shift)
+            self.monster_vertical.draw(self.display_surface)
+
+            self.monster_horizontal_collision()
+            self.monster_horizontal.update(self.world_shift)
+            self.monster_horizontal.draw(self.display_surface)
 
             self.scroll_x()
 
