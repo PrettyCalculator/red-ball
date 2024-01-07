@@ -78,7 +78,7 @@ class Level:
                 elif cell == '1':
                     self.pump_tiles.add(Tile((x, y), image_pump))
                 elif cell == '2':
-                    self.repump_tiles.add(Tile((x, y), image_repump))
+                    self.repump_tiles.add(Tile((x, y + 39), image_repump))
                 elif cell == 'W':
                     self.water_tiles.add(Tile((x, y), image_water))
                 elif cell == "S":
