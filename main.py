@@ -7,7 +7,6 @@ from sound import Sound
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
-print('privet')
 all_sprites = pygame.sprite.Group()
 sprite = pygame.sprite.Sprite()
 pygame.display.set_caption('Шарик')
@@ -16,7 +15,8 @@ home = HomeScreen(homescreen_map, screen)
 level = LevelScreen(homescreen_map, screen)
 
 clock = pygame.time.Clock()
-bg_surf = load_image('background.jpg')
+background = [load_image('background.jpg'), load_image('fone8.jpg'),
+              load_image('fone4.jpg'), load_image('fone7.png'), load_image('fone1.png'), load_image('fone2.png')]
 pause_button = Pause()
 pause_menu = PauseMenu()
 transition_menu = TransitionMenu()
@@ -83,7 +83,7 @@ while running:
 
             game = Level(screen, num)
             count += 1
-        bg_surf = pygame.transform.scale(bg_surf, (screen_width, screen_height))
+        bg_surf = pygame.transform.scale(background[num], (screen_width, screen_height))
         screen.blit(bg_surf, (0, 0))
         game.pause = False
         game.run()

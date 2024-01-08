@@ -33,13 +33,13 @@ class Level:
         self.monster_vertical = pygame.sprite.Group()
         self.monster_horizontal = pygame.sprite.Group()
 
-        image_wall = load_image('wall.png')
+        image_wall = load_image('wall6.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
         image_jump = load_image('double_jump.jpg')
         image_jump = pygame.transform.scale(image_jump, (tile_size, tile_size))
 
-        image_pump = load_image('pump.png')
+        image_pump = load_image('big.png', -1)
         image_pump = pygame.transform.scale(image_pump, (30, 64))
 
         image_repump = load_image('repump.png')
@@ -54,7 +54,7 @@ class Level:
         image_door = load_image('door.png', -1)
         image_door = pygame.transform.scale(image_door, (tile_size + 7, tile_size + 7))
 
-        image_lava = load_image('lava.jpg', -1)
+        image_lava = load_image('lava2.jpg', -1)
         image_lava = pygame.transform.scale(image_lava, (tile_size, tile_size))
 
         image_monster = load_image('monstr2.png', -1)
@@ -65,9 +65,6 @@ class Level:
 
         self.stars1, self.stars2, self.stars3 = True, True, True
         self.num_star = 0
-
-        image_water = pygame.Surface((tile_size, tile_size))
-        image_water.fill('blue')
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -80,17 +77,15 @@ class Level:
                 elif cell == 'J':
                     self.jump_tiles.add(Tile((x, y), image_jump))
                 elif cell == '1':
-                    self.pump_tiles.add(Tile((x, y), image_pump))
+                    self.pump_tiles.add(Tile((x + 17, y), image_pump))
                 elif cell == '2':
                     self.repump_tiles.add(Tile((x, y + 39), image_repump))
-                elif cell == 'W':
-                    self.water_tiles.add(Tile((x, y), image_water))
                 elif cell == "S":
-                    self.star1.add(Tile((x, y + 30), image_star))
+                    self.star1.add(Tile((x + 20, y + 30), image_star))
                 elif cell == "s":
-                    self.star2.add(Tile((x, y + 30), image_star))
+                    self.star2.add(Tile((x + 20, y + 30), image_star))
                 elif cell == "c":
-                    self.star3.add(Tile((x, y + 30), image_star))
+                    self.star3.add(Tile((x + 20, y + 30), image_star))
                 elif cell == "K":
                     self.posts.add(Tile((x, y + 36), image_post))
                 elif cell == 'L':

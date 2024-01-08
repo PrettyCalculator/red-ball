@@ -58,7 +58,7 @@ level_map4 = [
     'XXXXXXXXJJXXXXXXJJJXXXXXXXXXXXXXXXXXX  X X X X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 level_map5 = [
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXP     XXS  XXs        M             XXXXXXXXXLLLLLLLLLLLLLLLLLXXXX       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXX      XX   XX                       XXXXXXXXX                             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXX      XX   XX                       XXXXXXXXX                 mXXXX       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -66,21 +66,21 @@ level_map5 = [
     'XXXX      XX   XXJJXXXXXXXXXXXXXXXXX    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXX      XX                                                                                        XXXXXXXX',
     'XXXX                                                                        M      M       M        XXXXXXXX',
-    'XXXX                   1                                                                            DXXXXXXXXXX',
+    'XXXX      2             1                                                                            DXXXXXXXXXX',
     "XXXXXXXXXXXXJJJXXXXXXXXXXXXXXXXXXXXXJJJJ   X   X   X   XX   X   XXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     'XXXXXXXXJJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                              XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 level_map6 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XP                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXK XX           XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXX   XXXXXXXXX    XXXXXXX     XXXXXXXXXXXXX                                                  XXXXXXXXXXXXXXXXXXX',
-    'XXX KXXXXXXXXXX    XXX     M M     XXs        M    M                                          XXXXXXXXXXXXXXXXXXX',
-    'XXX   XXXXXXXXX    XXX             XX                   XX  XXXXXm                           mXXXXXXXXXXXXXXXXXXX',
-    'XXX   XXXXXXXXX    XXX    XXXXX    XXX       XXX  XXX       XXXXXm                   m            M  XXXXXXXXXXXX',
-    'XXX    XXXXXXXX    XXX    XXXXX                          K  XXXXX  XX    XX    XX    XX    XX        XXXXXXXXXXXX',
-    'XXXJK SXXXXXXXX           XXXXX         JJ              XX  XXXXXc XX    XX    XX    XX    XXKK      DXXXXXXXXXXX',
-    'XXXXXXXXXXXXXXXXXXXXXXJJJJXXXXXXXXXXXX                      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+    'XXXXP                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXK XX           XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXX   XXXXXXXXX    XXXXXXX     XXXXXXXXXXXXX                                                  XXXXXXXXXXXXXXX',
+    'XXXXXXX KXXXXXXXXXX    XXX     M M     XXs        M    M                                          XXXXXXXXXXXXXXX',
+    'XXXXXXX   XXXXXXXXX    XXX             XX                   XX  XXXXXm                           mXXXXXXXXXXXXXXX',
+    'XXXXXXX   XXXXXXXXX    XXX    XXXXX    XXX       XXX  XXX       XXXXXm                   m            M  XXXXXXXX',
+    'XXXXXXX    XXXXXXXX    XXX    XXXXX                          K  XXXXX  XX    XX    XX    XX    XX        XXXXXXXX',
+    'XXXXXXXJK SXXXXXXXX           XXXXX         JJ              XX  XXXXXc XX    XX    XX    XX    XXKK      DXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXJJJJXXXXXXXXXXXX                      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 homescreen_map = [
     '',
@@ -93,7 +93,7 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map4, level_map2, level_map3, level_map4, level_map5, level_map6]
+levels = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6]
 pygame.font.init()
 tile_size = 64
 screen_width = 1200
