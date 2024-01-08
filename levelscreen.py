@@ -35,7 +35,7 @@ class LevelScreen:
         self.btn_rect4 = pygame.Rect(250, 400, tile_size + 50, tile_size + 50)
         self.btn_rect5 = pygame.Rect(550, 400, tile_size + 50, tile_size + 50)
         self.btn_rect6 = pygame.Rect(850, 400, tile_size + 50, tile_size + 50)
-        self.btn_exit = pygame.Rect(950, 550, 200, 40)
+        self.btn_exit = pygame.Rect(950, 580, 200, 40)
 
         self.all = [[self.display_surface, pygame.Color('#b30000'), self.btn_rect1, 60, 2],
                     [self.display_surface, pygame.Color('#b30000'), self.btn_rect2, 60, 2],
@@ -56,12 +56,12 @@ class LevelScreen:
         self.exit = font.render("Exit", True, pygame.Color('#a8d8ff'))
         self.text = font.render("Выберите уровень", True, pygame.Color('Black'))
 
-        self.all_text = [(self.text1, (300, 137)),
-                         (self.text2, (600, 137)),
-                         (self.text3, (900, 137)),
-                         (self.text4, (300, 437)),
-                         (self.text5, (600, 437)),
-                         (self.text6, (900, 437))]
+        self.all_text = [(self.text1, (297, 136)),
+                         (self.text2, (597, 136)),
+                         (self.text3, (897, 136)),
+                         (self.text4, (297, 436)),
+                         (self.text5, (597, 436)),
+                         (self.text6, (897, 436))]
 
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
@@ -89,8 +89,8 @@ class LevelScreen:
         cursor = con.cursor()
         self.result = cursor.execute("""SELECT * FROM levels""").fetchall()
         last = 0
-        x_pos = [268, 568, 868, 268, 568, 868]
-        y_pos = [175, 175, 175, 475, 475, 475]
+        x_pos = [264, 564, 864, 264, 564, 864]
+        y_pos = [173, 173, 173, 473, 473, 473]
         for i in range(len(self.all)):
             if self.result[i][1] == 1 or last == 1 or i == 0:
                 pygame.draw.rect(*self.all[i])
@@ -115,7 +115,7 @@ class LevelScreen:
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_exit, 20, 5)
-        self.display_surface.blit(self.exit, (1020, 555))
+        self.display_surface.blit(self.exit, (1020, 585))
         self.display_surface.blit(self.text, (450, 30))
         self.windows()
         mouse_presses = pygame.mouse.get_pressed()
