@@ -33,13 +33,13 @@ class Level:
         self.monster_vertical = pygame.sprite.Group()
         self.monster_horizontal = pygame.sprite.Group()
 
-        image_wall = load_image('wall.png')
+        image_wall = load_image('wall6.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
-        image_jump = load_image('double_jump.jpg')
+        image_jump = load_image('wall.png')
         image_jump = pygame.transform.scale(image_jump, (tile_size, tile_size))
 
-        image_pump = load_image('pump.png')
+        image_pump = load_image('big.png', -1)
         image_pump = pygame.transform.scale(image_pump, (30, 64))
 
         image_repump = load_image('repump.png')
