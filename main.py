@@ -15,8 +15,8 @@ home = HomeScreen(homescreen_map, screen)
 level = LevelScreen(homescreen_map, screen)
 
 clock = pygame.time.Clock()
-background = [load_image('background.jpg'), load_image('fone7.png'),
-              load_image('fone4.jpg'), load_image('fone5.png'), load_image('fone6.png'), load_image('fone.png')]
+background = [load_image('background.jpg'), load_image('fone8.jpg'),
+              load_image('fone4.jpg'), load_image('fone7.png'), load_image('fone1.png'), load_image('fone2.png')]
 pause_button = Pause()
 pause_menu = PauseMenu()
 transition_menu = TransitionMenu()

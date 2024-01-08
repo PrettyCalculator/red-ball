@@ -38,7 +38,7 @@ level_map3 = [
     'XXXXXX                    XXXXX            XXXXXXXXXXX                                       XXXXXXXXXXX',
     'XXXXXP  M    M    M  M    XXXXX          S XXXXXXXXXXXXXXXXXXXXXXXXXXX                                XXXXXXXXX',
     'XXXXX           D                      XXXXXXXXXXX XXXXXXXXXXXXX',
-    'XXXXXXXXXXLLXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXX  XXXX   XXXXXX   XXXXXXXXXXXXXXXXXXXXXXX             XXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXX  XX  XXXXXXXX     s                                  XXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXX               c      XXXXXXXX   XXXXXXXXXXX',
     'XXXXX                                                                                                  XXXXXXXXXX',
