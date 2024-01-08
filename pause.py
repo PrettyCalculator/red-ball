@@ -70,22 +70,22 @@ class PauseMenu:
     resume_size = 300, 60
     resume_pos = 450, 200
     resume_pos_big = 440, 190
-    resume_image = pygame.transform.scale(load_image('pause_resume.jpg'), resume_size)
-    resume_image_big = pygame.transform.scale(load_image('pause_resume.jpg'),
+    resume_image = pygame.transform.scale(load_image('resume.png'), resume_size)
+    resume_image_big = pygame.transform.scale(load_image('resume.png'),
                                               (resume_size[0] + 20, resume_size[1] + 20))
 
     options_size = 300, 60
     options_pos = 450, 280
     options_pos_big = 440, 270
-    options_image = pygame.transform.scale(load_image('pause_options.jpg'), options_size)
-    options_image_big = pygame.transform.scale(load_image('pause_options.jpg'),
+    options_image = pygame.transform.scale(load_image('options.png'), options_size)
+    options_image_big = pygame.transform.scale(load_image('options.png'),
                                                (options_size[0] + 20, options_size[1] + 20))
 
     exit2_size = 300, 60
     exit2_pos = 450, 360
     exit2_pos_big = 440, 350
-    exit2_image = pygame.transform.scale(load_image('pause_exit2.jpg'), exit2_size)
-    exit2_image_big = pygame.transform.scale(load_image('pause_exit2.jpg'), (exit2_size[0] + 20, exit2_size[1] + 20))
+    exit2_image = pygame.transform.scale(load_image('exit.png'), exit2_size)
+    exit2_image_big = pygame.transform.scale(load_image('exit.png'), (exit2_size[0] + 20, exit2_size[1] + 20))
 
     value_image_0 = font.render("0%", True, pygame.Color('black'))
     value_image_35 = font.render("35%", True, pygame.Color('black'))
@@ -268,8 +268,8 @@ class TransitionMenu(PauseMenu):
     resume_size = 300, 60
     resume_pos = 450, 280
     resume_pos_big = 440, 260
-    resume_image = pygame.transform.scale(load_image('pause_resume.jpg'), resume_size)
-    resume_image_big = pygame.transform.scale(load_image('pause_resume.jpg'),
+    resume_image = pygame.transform.scale(load_image('resume.png'), resume_size)
+    resume_image_big = pygame.transform.scale(load_image('resume.png'),
                                               (resume_size[0] + 20, resume_size[1] + 20))
 
     def __init__(self):
