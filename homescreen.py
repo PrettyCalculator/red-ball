@@ -14,7 +14,7 @@ class HomeScreen:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
-        image_wall = load_image('wall.png')
+        image_wall = load_image('wall6.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
         btn_width, btn_height = 270, 70
