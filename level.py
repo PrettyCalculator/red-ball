@@ -332,8 +332,9 @@ class Level:
         cursor = con.cursor()
         stars_game = self.count_stars()
         stars_db = cursor.execute(f"SELECT stars FROM levels WHERE level_id = {self.level_index}").fetchall()[0][0]
+        cursor.execute(f"UPDATE levels SET passed = 1 WHERE level_id = {self.level_index}")
         if stars_db < stars_game:
-            cursor.execute(f"UPDATE levels SET passed = 1, stars = {self.count_stars()} "
+            cursor.execute(f"UPDATE levels SET stars = {self.count_stars()} "
                            f"WHERE level_id = {self.level_index}")
         con.commit()
         con.close()
