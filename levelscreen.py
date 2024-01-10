@@ -54,7 +54,7 @@ class LevelScreen:
         self.text6 = font.render("6", True, pygame.Color('#a8d8ff'))
 
         self.exit = font.render("Exit", True, pygame.Color('#a8d8ff'))
-        self.text = font.render("Выберите уровень", True, pygame.Color('Black'))
+        self.text = font.render("Выберите уровень", True, pygame.Color('#b30000'))
 
         self.all_text = [(self.text1, (297, 136)),
                          (self.text2, (597, 136)),

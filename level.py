@@ -87,7 +87,7 @@ class Level:
                 elif cell == "c":
                     self.star3.add(Tile((x + 20, y + 30), image_star))
                 elif cell == "K":
-                    self.posts.add(Tile((x, y + 36), image_post))
+                    self.posts.add(Tile((x + 20, y + 36), image_post))
                 elif cell == 'L':
                     lava_tile = Tile((x, y), image_lava)
                     self.lava.add(lava_tile)
