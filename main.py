@@ -9,7 +9,7 @@ pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 all_sprites = pygame.sprite.Group()
 sprite = pygame.sprite.Sprite()
-pygame.display.set_caption('Шарик')
+pygame.display.set_caption('red-ball')
 
 home = HomeScreen(homescreen_map, screen)
 level = LevelScreen(homescreen_map, screen)
