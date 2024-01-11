@@ -3,7 +3,8 @@ import os
 from settings import *
 
 
-def load_image(name, colorkey=None):
+# в этом файле находятся общедоступные функции, которые нужны всем классам
+def load_image(name, colorkey=None):  # функция, которая загружает изображения для тайлов
     initialization()
     fullname = os.path.join('data', name)
     image = pygame.image.load(fullname)
@@ -17,15 +18,12 @@ def load_image(name, colorkey=None):
     return image
 
 
-
-
-
-def initialization():
+def initialization():  # функция, которая еще инициазилирует pygame и screen(без нее иногда не работает load_image)
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
 
 
-def get_volume():
+def get_volume():  # функция, которая получает значение уровня звука из базы данных
     con = sqlite3.connect('data/db/database.sqlite')
     value = con.cursor().execute(f"SELECT value FROM music").fetchall()[0][0]
     con.close()

@@ -4,13 +4,13 @@ from player import Player
 from functions import load_image
 
 
-class HomeScreen:
+class HomeScreen:  # класс начального экрана
     def __init__(self, level_data, surface):
         self.display_surface = surface
         self.setup_level(level_data)
         self.world_shift = 0
 
-    def setup_level(self, layout):
+    def setup_level(self, layout):  # функция, которая задает координаты тайлов, кнопок и мяча на главном экране
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
@@ -37,10 +37,10 @@ class HomeScreen:
                 elif cell == "P":
                     self.player.add(Player((x, y)))
 
-    def vertical_movement_collision(self):
+    def vertical_movement_collision(self): # в этом классе используется только вертикальный коллайд, потому что на фоне мяч может только прыгать
         player = self.player.sprite
         player.apply_gravity()
-        for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
+        for sprite in pygame.sprite.spritecollide(player, self.tiles, False):  # проверка столкновения со спрайтами определенной группы
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
@@ -49,7 +49,7 @@ class HomeScreen:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
 
-    def run(self):
+    def run(self):  # основная функция, которая обновляет спрайты, мяч и кнопки, также считывает нажатия
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         pygame.draw.rect(self.display_surface, pygame.Color('#b30000'), self.btn_rect, 35, 3)
@@ -57,7 +57,7 @@ class HomeScreen:
         self.display_surface.blit(self.text1, (self.text_x, self.text_y))
         self.display_surface.blit(self.text2, (self.text_x1, self.text_y1))
         mouse_presses = pygame.mouse.get_pressed()
-        if mouse_presses[0]:
+        if mouse_presses[0]:  # считывание кликов на кнопку
             mouse_pos = pygame.mouse.get_pos()
             if self.btn_rect.collidepoint(mouse_pos):
                 change_mode('level')

@@ -1,16 +1,16 @@
 import pygame
 
 
-def change_mode(value):
+def change_mode(value):  # функция, которая изменяет mode игры
     global mode
     mode = value
 
 
-def change_num(value):
+def change_num(value):  # изменяет индекс уровня
     global num
     num = value
 
-
+# карты уровней
 level_map1 = [
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXX             XXXXXX                                                             XXXXXXXXXXXX',
@@ -84,6 +84,7 @@ level_map6 = [
     'XXXXXXXJK SXXXXXXXX           XXXXX         JJ              XX  XXXXXc XX    XX    XX    XX    XXKK      DXXXXXXX',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXJJJJXXXXXXXXXXXX  XX                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
+# карта главного экрана
 homescreen_map = [
     '',
     '  P',
@@ -95,14 +96,14 @@ homescreen_map = [
     '',
     '',
     'XXXXXXXXXXXXXXXXXXX']
-levels = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6]
+levels = [level_map1, level_map2, level_map3, level_map4, level_map5, level_map6]  # список всех уровней
 pygame.font.init()
-tile_size = 64
+tile_size = 64  # размер одного тайла
 screen_width = 1200
 screen_height = len(homescreen_map) * tile_size
 jump_speed = -15
 screen = pygame.display.set_mode((screen_width, screen_height))
-mode = 'home'
-font = pygame.font.Font(None, 50)
+mode = 'home'  # mode игры
+font = pygame.font.Font(None, 50)  # шрифт
 volume = 1
 num = 0

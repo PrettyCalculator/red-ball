@@ -1,11 +1,11 @@
 from tiles import Tile
-from settings import *
 from player import Player
 from functions import load_image
 from monster import *
 import sqlite3
 
 
+# основной класс для отрисовки текущего уровня
 class Level:
     def __init__(self, surface, num):
         # настройка уровня
@@ -19,6 +19,7 @@ class Level:
         self.passed = False
 
     def setup_level(self, layout):
+        # группы для тайлов
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
         self.jump_tiles = pygame.sprite.Group()
@@ -30,9 +31,10 @@ class Level:
         self.posts = pygame.sprite.Group()
         self.door = pygame.sprite.GroupSingle()
         self.lava = pygame.sprite.Group()
+        # группы для монстров
         self.monster_vertical = pygame.sprite.Group()
         self.monster_horizontal = pygame.sprite.Group()
-
+        # загрузка изображений для всех спрайтов
         image_wall = load_image('wall6.png')
         image_wall = pygame.transform.scale(image_wall, (tile_size, tile_size))
 
@@ -66,6 +68,7 @@ class Level:
         self.stars1, self.stars2, self.stars3 = True, True, True
         self.num_star = 0
 
+        # цикл, читающий карту уровня и расставляющий объекты
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 x = col_index * tile_size
@@ -98,7 +101,7 @@ class Level:
                 elif cell == 'm':
                     self.monster_horizontal.add(MonsterHorizontal((x, y), image_monster))
 
-    def count_stars(self):
+    def count_stars(self):  # функция для подсчета количества звезд
         c = 0
         if not self.stars1:
             c += 1
@@ -108,7 +111,7 @@ class Level:
             c += 1
         return c
 
-    def scroll_x(self):
+    def scroll_x(self):  # функция для движения камеры влево или вправо, за счет передвижения тайлов
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
@@ -122,11 +125,11 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
-    def horizontal_movement_collision(self):
+    def horizontal_movement_collision(self):  # функция для распознавания коллайдов мяча по вертикали с различными группами спрайтов
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
-        f1 = False
-        f2 = False
+        f1 = False  # уперся ли мяч в препятствия слева
+        f2 = False  # уперся ли мяч в препятствие справа
         for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
@@ -165,17 +168,17 @@ class Level:
                     player.change_size(False)
         if self.door.sprite.rect.colliderect(player.rect):
             if self.level_index + 1 > len(self.levels) - 1:
-                change_mode('passed')
+                change_mode('passed')  # смена game мода игры на 'passed'. Это означает, что игрок прошел последний уровень пройдена.
                 self.update_database()
                 self.pause = True
             else:
                 self.update_database()
-                change_mode('transition')
+                change_mode('transition')  # смена game мода игры на 'transition'(переход). Это означает, что игрок прошел уровень и может перейти на следующий
                 self.pause = True
         player.left_collide = f1
         player.right_collide = f2
 
-    def monster_vertical_collision(self):
+    def monster_vertical_collision(self):  # вертикальные столкновения движущихся монстров
         for monster in self.monster_vertical.sprites():
             for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
                 if sprite.rect.colliderect(monster.rect):
@@ -195,7 +198,7 @@ class Level:
                         monster.rect.bottom = sprite.rect.top
                         monster.direction.y = - monster.direction.y
 
-    def monster_horizontal_collision(self):
+    def monster_horizontal_collision(self):  # горизонтальные столкновения движущихся монстров
         for monster in self.monster_horizontal.sprites():
             for sprite in pygame.sprite.spritecollide(monster, self.tiles, False):
                 if sprite.rect.colliderect(monster.rect):
@@ -213,7 +216,7 @@ class Level:
                         monster.rect.right = sprite.rect.left
                     monster.direction.x = - monster.direction.x
 
-    def vertical_movement_collision(self):
+    def vertical_movement_collision(self):  # вертикальный коллайд мяча
         player = self.player.sprite
         player.apply_gravity()
         for sprite in pygame.sprite.spritecollide(player, self.tiles, False):
@@ -261,6 +264,7 @@ class Level:
                     player.change_size(False)
                 player.is_double_jump = False
 
+        # при коллайде с монстром уровен загружается заново
         if pygame.sprite.spritecollide(player, self.monster_vertical, False):
             self.setup_level(self.level_data)
 
@@ -270,8 +274,9 @@ class Level:
         if pygame.sprite.spritecollide(player, self.lava, False):
             self.setup_level(self.level_data)
 
+        # отрисовка и коллайд звезд, когда игрок собирает их
         if self.star1.sprite.rect.colliderect(player.rect) and self.stars1:
-            self.stars1 = False
+            self.stars1 = False # True - звезда не собрана, False - звезда собрана
             self.num_star += 1
         if self.stars1:
             self.star1.update(self.world_shift)
@@ -292,7 +297,7 @@ class Level:
             self.stars3 = False
             self.num_star += 1
         if self.stars3:
-            self.star3.update(self.world_shift)  # звезда
+            self.star3.update(self.world_shift)
             self.star3.draw(self.display_surface)
         if self.num_star < 3:
             self.display_surface.blit(self.small_stars, (90, -100, 20, 20))
@@ -307,14 +312,14 @@ class Level:
             self.display_surface.blit(self.stars, (-180, -113, 0, 0))
             self.display_surface.blit(self.stars, (-110, -113, 0, 0))
 
-        for sprite in self.posts.sprites():
+        for sprite in self.posts.sprites(): # коллайд игрока со столбом с шипами, игрок переносится в начало уровня
             if sprite.rect.colliderect(player.rect):
                 self.setup_level(self.level_data)
 
         if player.rect.y >= 600:
             self.setup_level(self.level_data)
 
-    def change_level(self):
+    def change_level(self):  # фунция смены уровня, когда игрок проходит текущий
         self.level_index += 1
         if self.level_index > len(self.levels) - 1:
             self.to_start()
@@ -322,12 +327,12 @@ class Level:
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
 
-    def to_start(self):
+    def to_start(self):  # функция, возращающая игрока на самый первый уровень(после того как он прошел всю игру)
         self.level_index = num
         self.level_data = self.levels[self.level_index]
         self.setup_level(self.level_data)
 
-    def update_database(self):
+    def update_database(self): # функция для записи информации в базу данных
         con = sqlite3.connect('data/db/database.sqlite')
         cursor = con.cursor()
         stars_game = self.count_stars()
@@ -339,7 +344,7 @@ class Level:
         con.commit()
         con.close()
 
-    def run(self):
+    def run(self): # основная функция класса, которая обновляет и рисует все тайлы
         if not self.pause:
             # квадратики уровня
             self.tiles.update(self.world_shift)

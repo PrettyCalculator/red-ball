@@ -2,10 +2,11 @@ from functions import load_image
 from settings import *
 
 
+# отдельный файл для класса игрока
 class Player(pygame.sprite.Sprite):
     frames_small, frames_big = [], []
     c = 0
-    for i in range(25):
+    for i in range(25):  # который создает два списка с раскадровкой анимации мяча
         image = load_image(f's1 ({c}).png')
         image = pygame.transform.scale(image, (50, 50))
         frames_small.append(image)
@@ -16,12 +17,12 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
         self.delay = 0
-        self.cur_frame = 0
-        self.frames = Player.frames_small
+        self.cur_frame = 0  # текущий кадр анимации
+        self.frames = Player.frames_small  # список кадров
         self.image = self.frames[self.cur_frame]
         self.rect = self.image.get_rect(topleft=pos)
 
-        self.direction = pygame.math.Vector2(0, 0)
+        self.direction = pygame.math.Vector2(0, 0)  # направление мяча в пространстве
         self.speed = 6
         self.gravity = 0.8
         self.jump_speed = -15
@@ -32,7 +33,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_key = False
         self.left_collide = False
 
-    def get_input(self):
+    def get_input(self):  # функция, которая управляет мячом вследствие нажатия игроком на кнопки
         self.jump_key = False
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
@@ -53,7 +54,7 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_UP]:
             self.jump_key = True
 
-    def bunnyhop(self):
+    def bunnyhop(self):  # функицая, которая делает еще несколько отскоков мяча после прыжка
         if self.jump_key:
             if self.is_double_jump:
                 if self.jump_speed > -15:
@@ -74,15 +75,15 @@ class Player(pygame.sprite.Sprite):
         elif not self.is_jump:
             self.direction.y = 0
 
-    def apply_gravity(self):
+    def apply_gravity(self):  # добавление гравитации
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
 
-    def jump(self):
+    def jump(self):  # прыжок
         self.jump_speed = -15
         self.direction.y = self.jump_speed
 
-    def anim(self):
+    def anim(self):  # функция, которая перемещает кадры в соответствии с направлением движения мяча
         if self.cur_frame == 24 and self.direction.x > 0:
             self.cur_frame = 0
         elif self.cur_frame == 0 and self.direction.x < 0:
@@ -94,7 +95,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image = self.frames[self.cur_frame]
 
-    def change_size(self, value):
+    def change_size(self, value):  # функция, которая изменяет размер мяча
         x = self.rect.x
         y = self.rect.y
         if value:
@@ -112,5 +113,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += y + 30
             self.anim()
 
-    def update(self):
+    def update(self):  # обновление (вызывается в классе Level)
         self.get_input()
